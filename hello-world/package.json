@@ -1,38 +1,49 @@
 {
-  "name": "hello-world",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "react-scripts": "4.0.0",
-    "web-vitals": "^0.2.4"
-  },
+  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web",
+    "eject": "expo eject",
+    "test": "jest --watchAll"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "jest": {
+    "preset": "jest-expo"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "dependencies": {
+    "@expo/vector-icons": "^10.0.0",
+    "@react-native-community/masked-view": "0.1.10",
+    "@react-navigation/bottom-tabs": "^5.8.0",
+    "@react-navigation/native": "^5.7.3",
+    "@react-navigation/stack": "^5.9.0",
+    "@types/react-native-calendars": "^1.20.12",
+    "expo": "~39.0.2",
+    "expo-asset": "~8.2.0",
+    "expo-calendar": "~8.5.0",
+    "expo-constants": "~9.2.0",
+    "expo-font": "~8.3.0",
+    "expo-linking": "^1.0.1",
+    "expo-splash-screen": "~0.6.2",
+    "expo-status-bar": "~1.0.2",
+    "expo-web-browser": "~8.5.0",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
+    "react-native-calendar-events": "^2.1.2",
+    "react-native-calendars": "^1.403.0",
+    "react-native-gesture-handler": "~1.7.0",
+    "react-native-safe-area-context": "3.1.4",
+    "react-native-screens": "~2.10.1",
+    "react-native-vector-icons": "^7.1.0",
+    "react-native-web": "~0.13.12"
+  },
+  "devDependencies": {
+    "@babel/core": "~7.9.0",
+    "@types/react": "~16.9.35",
+    "@types/react-native": "~0.63.2",
+    "jest-expo": "~39.0.0",
+    "typescript": "~3.9.5"
+  },
+  "private": true
 }
