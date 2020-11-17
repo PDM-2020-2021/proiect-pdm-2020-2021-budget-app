@@ -6,57 +6,37 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 
 export default function TabOneScreen() {
-  var accounts = [
+  var categories = [
     {
-      accNumber: '56456454',
-      accType: 'D',
-      productCode: '1454541',
-      availBalance: '987436.46',
+      key: '1',
+      name: 'Transport',
+      amount: '150'
     },
     {
-      accNumber: '12424345645',
-      accType: 'D',
-      productCode: '154545641',
-      availBalance: '500397.64',
+      key: '2',
+      name: 'Food',
+      amount: '300'
     },
     {
-      accNumber: '4554545664',
-      accType: 'D',
-      productCode: '44545',
-      availBalance: '2467.02',
+      key: '3',
+      name: 'Education',
+      amount: '500'
     },
   ];
   return (
-<View style={styles.container}>
-      <DataTable>
+<View style={styles.container} lightColor="#eee" darkColor="rgba(255,255,255,0.1)">
+      <DataTable style={styles.datatable}>
         <DataTable.Header>
-          <DataTable.Title>Account</DataTable.Title>
-          <DataTable.Title>Code</DataTable.Title>
-          <DataTable.Title>
-            Balance Available
-          </DataTable.Title>
+          <DataTable.Title >Categories</DataTable.Title>
+          <DataTable.Title >Amount</DataTable.Title>
         </DataTable.Header>
-        {
-          accounts.map(account => {
-          return (
-            <DataTable.Row
-              key={account.accNumber} // you need a unique key per item
-              onPress={() => {
-                // added to illustrate how you can make the row take the onPress event and do something
-                console.log(`selected account ${account.accNumber}`)
-              }}
-            >
-              <DataTable.Cell>
-                {account.accNumber}
-              </DataTable.Cell>
-              <DataTable.Cell >
-                {account.productCode}
-              </DataTable.Cell>
-              <DataTable.Cell numeric>
-                {account.availBalance}
-              </DataTable.Cell>
-            </DataTable.Row>
-        )})}
+        { categories.map((categry, key)=>(
+        <DataTable.Row>
+            <DataTable.Cell>{categry.name}</DataTable.Cell>
+            <DataTable.Cell>{categry.amount}</DataTable.Cell>
+        </DataTable.Row>
+        )
+    )}
       </DataTable>
     </View>
   );
@@ -67,7 +47,11 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    
   },
+  datatable: {
+    backgroundColor: 'white'
+    },
   title: {
     fontSize: 20,
     fontWeight: 'bold',
