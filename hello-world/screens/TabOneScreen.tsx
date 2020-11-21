@@ -31,8 +31,8 @@ export default function TabOneScreen() {
           <DataTable.Title >Amount</DataTable.Title>
         </DataTable.Header>
         { categories.map((categry, key)=>(
-        <DataTable.Row>
-            <DataTable.Cell>{categry.name}</DataTable.Cell>
+        <DataTable.Row key={key}>
+            <DataTable.Cell  >{categry.name}</DataTable.Cell>
             <DataTable.Cell>{categry.amount}</DataTable.Cell>
         </DataTable.Row>
         )
