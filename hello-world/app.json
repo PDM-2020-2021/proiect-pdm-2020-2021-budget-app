@@ -1,0 +1,12 @@
+{
+  "name": "Budgeting",
+  "displayName": "Budgeting",
+  "expo": {
+    "name": "Budgeting",
+    "slug": "Budgeting",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
