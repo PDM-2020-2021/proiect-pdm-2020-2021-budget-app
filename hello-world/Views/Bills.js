@@ -1,9 +1,21 @@
 import React, {useState} from 'react';
-import {View, TouchableOpacity, Text} from 'react-native';
+import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
 import {Agenda} from 'react-native-calendars';
 import {Card, Avatar} from 'react-native-paper';
 
-
+const styles = StyleSheet.create({
+  header: {
+    height: 90,
+    backgroundColor: 'orange',
+    alignItems: 'center',
+    justifyContent: 'center',
+},
+headerText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
+}
+});
 const timeToString = (time) => {
   const date = new Date(time);
   return date.toISOString().split('T')[0];
@@ -54,6 +66,10 @@ const Bills = props  => {
 
   return (
     <View style={{flex: 1}}>
+       <View style={styles.header}>
+          <Text style={styles.headerText}>Reports</Text>
+        </View>
+    <View style={{flex: 1}}>
       <Agenda
         items={items}
         loadItemsForMonth={loadItems}
@@ -61,7 +77,9 @@ const Bills = props  => {
         renderItem={renderItem}
       />
     </View>
+    </View>
   );
 };
 
 export default Bills;
+

@@ -57,13 +57,13 @@ export default class List extends Component {
     }
 
     renderItem = ({item}) => (
+        <View style={styles.flatList}>
+        <Text style={styles.text}> {item.text} </Text>
         <TouchableHighlight onPress={() => {this.setModalVisible(true); this.setInputText(item.text,item.price),this.setEditedItem(item.id)}}
             underlayColor={'#f1f1f1'}> 
-            <View style={styles.item} >
-                <Text style={styles.text}> {item.text} </Text>
                 <Text style={styles.price}> {item.price} </Text>
-            </View>
         </TouchableHighlight>
+        </View>
     )
     
     render() {
@@ -72,11 +72,14 @@ export default class List extends Component {
                 <View style={styles.header}>
                     <Text style={styles.headerText}>Budgets</Text>
                 </View>
+               
                 {/*TouchableHighlight trebuie sa aiba un singur copil, daca vrei mai multi ii pui intr-un view*/} 
                 {/*Functioneaza, dar nu salveaza datele noi introduse*/} 
-                { <TouchableHighlight onPress={() => {this.setModalVisible(true); this.setInputText(),this.setIsNew(true)}} underlayColor={'#f1f1f1'}> 
+                { <TouchableHighlight 
+                style={styles.addButton}
+                onPress={() => {this.setModalVisible(true); this.setInputText(),this.setIsNew(true)}} underlayColor={'#f1f1f1'}> 
                     <View style={styles.item} >
-                        <Text style={styles.text}>Save</Text>
+                        <Text style={styles.text}>+  </Text>
                     </View>
                  </TouchableHighlight>}
 
@@ -84,6 +87,9 @@ export default class List extends Component {
                     data={this.state.data}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={this.renderItem}
+                    // numColumns={2}                  // set number of columns 
+                    
+        
                     ListHeaderComponent={()=><Text style= {styles.text} >Category       Price</Text>  }
       
                 />
@@ -120,7 +126,7 @@ export default class List extends Component {
 
 const styles = StyleSheet.create({
     header: {
-        height: 120,
+        height: 90,
         backgroundColor: 'orange',
         alignItems: 'center',
         justifyContent: 'center',
@@ -136,7 +142,7 @@ const styles = StyleSheet.create({
     item: {
         flexDirection: 'row',
         borderBottomWidth: 1,
-        borderBottomColor: 'grey',
+        borderBottomColor: 'white',
         alignItems: 'center',
         
     },
@@ -180,11 +186,28 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     touchableHighlight: {
+       
         backgroundColor: 'white', 
         marginVertical: 10,
         alignSelf: 'stretch',
         alignItems: 'center',
-    } 
+    },
+    flatList:{
+        flex: 1,
+        flexDirection: "row",
+        flexWrap: "wrap",
+    },
+    addButton:{
+        borderWidth:1,
+        borderColor:'rgba(0,0,0,0.2)',
+        alignItems:'center',
+        justifyContent:'center',
+        alignSelf: 'flex-end',
+        width:70,
+        height:70,
+        backgroundColor:'#fff',
+        borderRadius:50,
+    }
 })
 
 // export default function Home()
