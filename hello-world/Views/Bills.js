@@ -5,8 +5,8 @@ import {Card, Avatar} from 'react-native-paper';
 
 const styles = StyleSheet.create({
   header: {
-    height: 90,
-    backgroundColor: 'orange',
+    height: 120,
+    backgroundColor: '#41cac6',
     alignItems: 'center',
     justifyContent: 'center',
 },
@@ -67,7 +67,7 @@ const Bills = props  => {
   return (
     <View style={{flex: 1}}>
        <View style={styles.header}>
-          <Text style={styles.headerText}>Reports</Text>
+          <Text style={styles.headerText}>Bills</Text>
         </View>
     <View style={{flex: 1}}>
       <Agenda

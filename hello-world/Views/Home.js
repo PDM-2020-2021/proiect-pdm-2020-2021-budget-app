@@ -127,7 +127,7 @@ export default class List extends Component {
 const styles = StyleSheet.create({
     header: {
         height: 90,
-        backgroundColor: 'orange',
+        backgroundColor: '#41cac6',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -205,27 +205,7 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-end',
         width:70,
         height:70,
-        backgroundColor:'#fff',
+        backgroundColor:'#4fa2d2',
         borderRadius:50,
     }
 })
-
-// export default function Home()
-// {
-   
-//     return (
-//         <View style={styles.container}>
-//          <Button title="Click me" onPress={() => console.log("msss")}></Button>
-//          <Text>PAGINA DE Home</Text>
-//       </View> 
-//     );
-    
-// }
-// const styles = StyleSheet.create({
-//     container: {
-//       marginTop: 100,
-//       padding: 10,
-//       textAlign: "center",
-//       justifyContent: 'space-around'
-//     },
-//   });
