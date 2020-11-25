@@ -1,23 +1,19 @@
-
-
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, FlatList,  TextInput, Modal, TouchableHighlight, Button  } from 'react-native';
 
-const Data = [
-    {id: 1, text: 'Transport', pret: '50 lei'},
-    {id: 2, text: 'Mancare', pret: '50 lei'},
-
-] 
+ 
 export default class List extends Component {
     constructor(props) {
         super(props);
-        this.initData = Data
+        //this.initData = Data
         this.state = {
-            data: this.initData,
+            data: [ {id: 1, text: 'Transport', price: '50 lei'},
+            {id: 2, text: 'Mancare', price: '50 lei'}],
             isModalVisible: false,
-            inputText1: '',
-            inputText2: '',
+            inputText: '',
+            inputPrice: '',
             editedItem: 0, 
+            isNew:false,
         };
     }
 
@@ -25,8 +21,12 @@ export default class List extends Component {
         this.setState({ isModalVisible: bool })
     }
 
-    setInputText = (text,pret) => {
-        this.setState({ inputText1: text, inputText2: pret})
+    setIsNew=(bool)=>{
+        this.setState({isNew:bool})
+    }
+
+    setInputText = (text,price) => {
+        this.setState({ inputText: text, inputPrice: price})
     }
 
     setEditedItem = (id) => {
@@ -34,23 +34,34 @@ export default class List extends Component {
     }
 
     handleEditItem = (editedItem) => {
+        console.log(this.state.isNew)
+        if(!this.state.isNew)
+        {
         const newData = this.state.data.map( item => {
             if (item.id === editedItem ) {
-                item.text = this.state.inputText1
-                item.pret = this.state.inputText2
+                item.text = this.state.inputText
+                item.price = this.state.inputPrice
                 return item
             }
             return item
         })
         this.setState({ data: newData })
     }
+    else{
+        this.state.data.push({id: (this.state.data.length + 1), text: this.state.inputText, price:this.state.inputPrice})
+        console.log("id : " + (this.state.data.length + 1))
+        console.log(this.state.inputText)
+        console.log(this.state.inputPrice)
+        this.setIsNew(false)
+    }
+    }
 
     renderItem = ({item}) => (
-        <TouchableHighlight onPress={() => {this.setModalVisible(true); this.setInputText(item.text,item.pret),this.setEditedItem(item.id)}}
+        <TouchableHighlight onPress={() => {this.setModalVisible(true); this.setInputText(item.text,item.price),this.setEditedItem(item.id)}}
             underlayColor={'#f1f1f1'}> 
             <View style={styles.item} >
                 <Text style={styles.text}> {item.text} </Text>
-                <Text style={styles.pret}> {item.pret} </Text>
+                <Text style={styles.price}> {item.price} </Text>
             </View>
         </TouchableHighlight>
     )
@@ -63,11 +74,11 @@ export default class List extends Component {
                 </View>
                 {/*TouchableHighlight trebuie sa aiba un singur copil, daca vrei mai multi ii pui intr-un view*/} 
                 {/*Functioneaza, dar nu salveaza datele noi introduse*/} 
-                {/* <TouchableHighlight onPress={() => {this.setModalVisible(true); this.setInputText(),this.setEditedItem()}} underlayColor={'#f1f1f1'}> 
+                { <TouchableHighlight onPress={() => {this.setModalVisible(true); this.setInputText(),this.setIsNew(true)}} underlayColor={'#f1f1f1'}> 
                     <View style={styles.item} >
                         <Text style={styles.text}>Save</Text>
                     </View>
-                 </TouchableHighlight> */}
+                 </TouchableHighlight>}
 
                 <FlatList 
                     data={this.state.data}
@@ -82,16 +93,16 @@ export default class List extends Component {
                         <Text style={styles.text}>Change text:</Text>
                         <TextInput
                             style={styles.textInput}
-                            onChangeText={(text) => {this.setState({inputText1: text}); console.log('state ', this.state.inputText1)}}
-                            defaultValue={this.state.inputText1}
+                            onChangeText={(text) => {this.setState({inputText: text}); console.log('state ', this.state.inputText)}}
+                            defaultValue={this.state.inputText}
                             editable = {true}
                             multiline = {false}
                             maxLength = {200}
                         /> 
                         <TextInput
                             style={styles.textInput}
-                            onChangeText={(pret) => {this.setState({inputText2: pret }); console.log('state ', this.state.inputText2)}}
-                            defaultValue={this.state.inputText2}
+                            onChangeText={(price) => {this.setState({inputPrice: price }); console.log('state ', this.state.inputPrice)}}
+                            defaultValue={this.state.inputPrice}
                             editable = {true}
                             multiline = {false}
                             maxLength = {200}
@@ -145,7 +156,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginLeft: 10,
     },
-    pret: {
+    price: {
         marginVertical: 30,
         fontSize: 20,
         fontWeight: 'bold',
