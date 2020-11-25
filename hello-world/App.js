@@ -11,7 +11,8 @@ const Tab = createBottomTabNavigator();
 const styles = StyleSheet.create({
   container: {
     marginTop: 100,
-    padding: 10
+    padding: 10,
+    textAlign: "center"
   },
   nav:{
     flexDirection: 'row',
@@ -39,7 +40,7 @@ function App()
           inactiveTintColor: 'gray',
         }}
       >
-        <Tab.Screen name="Home" component={Home} />
+        <Tab.Screen styles={styles.container} name="Home" component={Home} />
         <Tab.Screen name="Report" component={Report} />
         <Tab.Screen name="Bills" component={Bills} />
     </Tab.Navigator>

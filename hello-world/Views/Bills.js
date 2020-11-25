@@ -6,10 +6,20 @@ export default function Bills()
 {
    
     return (
-        <View>
+        <View style={styles.container}>
          <Button title="Click me" onPress={() => console.log("msss")}></Button>
          <Text>PAGINA DE Bills</Text>
       </View> 
     );
     
 }
+
+
+const styles = StyleSheet.create({
+    container: {
+      marginTop: 100,
+      padding: 10,
+      textAlign: "center",
+      justifyContent: 'space-around'
+    },
+  });
