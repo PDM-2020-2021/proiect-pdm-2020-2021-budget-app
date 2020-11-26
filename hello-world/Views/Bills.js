@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, TouchableOpacity, Text, StyleSheet} from 'react-native';
+import {View, TouchableOpacity, Text, StyleSheet, TouchableHighlight} from 'react-native';
 import {Agenda} from 'react-native-calendars';
 import {Card, Avatar} from 'react-native-paper';
 
@@ -19,7 +19,32 @@ headerText: {
   fontSize: 40,
     fontWeight: 'bold',
     color: 'white',
-}
+},
+item: {
+  flexDirection: 'row',
+  borderBottomWidth: 1,
+  borderBottomColor: 'white',
+  alignItems: 'center',
+  
+},
+addButton:{
+  borderWidth:1,
+  borderColor:'rgba(0,0,0,0.2)',
+  alignItems:'center',
+  justifyContent:'center',
+  alignSelf: 'flex-end',
+  width:70,
+  height:70,
+  backgroundColor:'#4fa2d2',
+  borderRadius:50,
+  marginBottom:10
+},
+text: {
+  marginVertical: 30,
+  fontSize: 20,
+  fontWeight: 'bold',
+  marginLeft: 10,
+},
 });
 const timeToString = (time) => {
   const date = new Date(time);
@@ -73,6 +98,13 @@ const Bills = props  => {
     <View style={{flex: 1}}>
        <View style={styles.header}>
           <Text style={styles.headerText}>Bills</Text>
+          <TouchableHighlight  
+                style={styles.addButton}
+                onPress={() => {this.setModalVisible(true); this.setInputText(),this.setIsNew(true)}} underlayColor={'#f1f1f1'}> 
+                    <View style={styles.item} >
+                        <Text style={styles.text}>+  </Text>
+                    </View>
+                    </TouchableHighlight>
         </View>
     <View style={{flex: 1}}>
       <Agenda
@@ -82,6 +114,7 @@ const Bills = props  => {
         renderItem={renderItem}
       />
     </View>
+    
     </View>
   );
 };

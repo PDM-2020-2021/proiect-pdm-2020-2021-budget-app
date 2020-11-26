@@ -36,12 +36,7 @@ const data = [
 const categories = ['Mancare', 'Haine', 'Transport', 'Vacante', 'Dulciuri', 'Machiaje', 'Electrocasnice']
 export default class Report extends Component 
 {
-  state = { selectedFruits: [] }
-
-  onSelectionsChange = (selectedFruits) => {
-    // selectedFruits is array of { label, value }
-    this.setState({ selectedFruits })
-  }
+  
   render () {
     return (
       
@@ -79,6 +74,7 @@ export default class Report extends Component
           <CustomMultiPicker
             options={categories}
             search={true} // should show search bar?
+            
             multiple={true} //
             placeholder={"Search"}
             placeholderTextColor={'#757575'}
@@ -89,9 +85,9 @@ export default class Report extends Component
             rowRadius={5}
             iconColor={"#00a2dd"}
             iconSize={30}
-            selectedIconName={"ios-checkmark-circle-outline"}
+            selectedIconName={"md-checkbox-outline"}
             scrollViewHeight={250}
-          
+            selected={[]} // list of options which are selected by default
           />
 
       </View> 
