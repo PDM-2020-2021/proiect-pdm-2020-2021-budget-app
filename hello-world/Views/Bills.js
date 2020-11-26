@@ -5,13 +5,18 @@ import {Card, Avatar} from 'react-native-paper';
 
 const styles = StyleSheet.create({
   header: {
-    height: 120,
+    height: 140,
     backgroundColor: '#41cac6',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'center',
+    flexDirection: 'row'
 },
 headerText: {
-    fontSize: 20,
+  flex: 1,
+  alignSelf:'flex-start',
+  marginTop:60,
+  marginLeft:10,
+  fontSize: 40,
     fontWeight: 'bold',
     color: 'white',
 }

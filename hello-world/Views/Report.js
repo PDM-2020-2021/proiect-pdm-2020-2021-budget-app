@@ -1,41 +1,50 @@
-import React from "react";
+import React, {Component} from "react";
 import { StyleSheet, Text, View, Button, Dimensions} from "react-native";
 import {PieChart} from "react-native-chart-kit";
+import CustomMultiPicker from "react-native-multiple-select-list";
 const data = [
   {
     name: "Transport",
-    price: 215,
+    price: 10,
     color: "#4fa2d2",
     legendFontColor: "#7F7F7F",
     legendFontSize: 15
   },
   {
     name: "Mancare",
-    price: 200,
+    price: 5000,
     color: "#4878ae",
     legendFontColor: "#7F7F7F",
     legendFontSize: 15
   },
   {
     name: "Vacante",
-    price: 250,
+    price: 1000,
     color: "#5d5390",
     legendFontColor: "#7F7F7F",
     legendFontSize: 15
   },
   {
     name: "Haine",
-    price: 300,
+    price: 500,
     color: "#5c426e",
     legendFontColor: "#7F7F7F",
     legendFontSize: 15
-  }
+  },
+  
 ];
-
-export default function Report()
+const categories = ['Mancare', 'Haine', 'Transport', 'Vacante', 'Dulciuri', 'Machiaje', 'Electrocasnice']
+export default class Report extends Component 
 {
-   
+  state = { selectedFruits: [] }
+
+  onSelectionsChange = (selectedFruits) => {
+    // selectedFruits is array of { label, value }
+    this.setState({ selectedFruits })
+  }
+  render () {
     return (
+      
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.headerText}>Reports</Text>
@@ -65,22 +74,49 @@ export default function Report()
             paddingLeft="15"
             absolute
 />
+          {/* aici afisam totalul selectat */}
+          <Text>Total:</Text> 
+          <CustomMultiPicker
+            options={categories}
+            search={true} // should show search bar?
+            multiple={true} //
+            placeholder={"Search"}
+            placeholderTextColor={'#757575'}
+            returnValue={"label"} // label or value
+            callback={(res)=>{ console.log(res) }} // callback pentru a trimite datele la piechart
+            rowBackgroundColor={"#eee"}
+            rowHeight={40}
+            rowRadius={5}
+            iconColor={"#00a2dd"}
+            iconSize={30}
+            selectedIconName={"ios-checkmark-circle-outline"}
+            scrollViewHeight={250}
+          
+          />
+
       </View> 
+      
     );
     
+}
 }
 const styles = StyleSheet.create({
     container: {
       textAlign: "center"
     },
     header: {
-      height: 120,
+      height: 140,
       backgroundColor: '#41cac6',
-      alignItems: 'center',
+      alignItems: 'flex-start',
       justifyContent: 'center',
+      flexDirection: 'row'
   },
   headerText: {
-      fontSize: 20,
+    flex: 1,
+    alignSelf:'flex-start',
+    marginTop:60,
+    marginLeft:10,
+    fontSize: 40,
       fontWeight: 'bold',
       color: 'white',
   }

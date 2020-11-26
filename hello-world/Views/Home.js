@@ -59,10 +59,12 @@ export default class List extends Component {
     renderItem = ({item}) => (
         <View style={styles.flatList}>
         <Text style={styles.text}> {item.text} </Text>
+        <View>
         <TouchableHighlight onPress={() => {this.setModalVisible(true); this.setInputText(item.text,item.price),this.setEditedItem(item.id)}}
             underlayColor={'#f1f1f1'}> 
                 <Text style={styles.price}> {item.price} </Text>
         </TouchableHighlight>
+        </View>
         </View>
     )
     
@@ -71,17 +73,18 @@ export default class List extends Component {
             <View style={styles.contentContainer}>
                 <View style={styles.header}>
                     <Text style={styles.headerText}>Budgets</Text>
-                </View>
-               
-                {/*TouchableHighlight trebuie sa aiba un singur copil, daca vrei mai multi ii pui intr-un view*/} 
-                {/*Functioneaza, dar nu salveaza datele noi introduse*/} 
-                { <TouchableHighlight 
+                    <TouchableHighlight  
                 style={styles.addButton}
                 onPress={() => {this.setModalVisible(true); this.setInputText(),this.setIsNew(true)}} underlayColor={'#f1f1f1'}> 
                     <View style={styles.item} >
                         <Text style={styles.text}>+  </Text>
                     </View>
-                 </TouchableHighlight>}
+                 </TouchableHighlight>
+                </View>
+               
+                 {/*TouchableHighlight trebuie sa aiba un singur copil, daca vrei mai multi ii pui intr-un view*/} 
+                {/*Functioneaza, dar nu salveaza datele noi introduse*/} 
+
 
                 <FlatList 
                     data={this.state.data}
@@ -114,7 +117,7 @@ export default class List extends Component {
                             maxLength = {200}
                         /> 
                         <TouchableHighlight onPress={() => {this.handleEditItem(this.state.editedItem); this.setModalVisible(false)}} 
-                            style={[styles.touchableHighlight, {backgroundColor: 'orange'}]} underlayColor={'#f1f1f1'}>
+                            style={[styles.touchableHighlight, {backgroundColor: '#41cac6'}]} underlayColor={'#f1f1f1'}>
                             <Text style={styles.text}>Save</Text>
                         </TouchableHighlight>  
                     </View>           
@@ -126,13 +129,18 @@ export default class List extends Component {
 
 const styles = StyleSheet.create({
     header: {
-        height: 90,
+        height: 140,
         backgroundColor: '#41cac6',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         justifyContent: 'center',
+        flexDirection: 'row'
     },
     headerText: {
-        fontSize: 20,
+        flex: 1,
+        alignSelf:'flex-start',
+        marginTop:60,
+        marginLeft:10,
+        fontSize: 40,
         fontWeight: 'bold',
         color: 'white',
     },
@@ -207,5 +215,6 @@ const styles = StyleSheet.create({
         height:70,
         backgroundColor:'#4fa2d2',
         borderRadius:50,
+        marginBottom:10
     }
 })
