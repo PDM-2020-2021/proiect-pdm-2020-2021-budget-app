@@ -5,40 +5,12 @@ import CustomMultiPicker from "react-native-multiple-select-list";
 
 import {addCategory, getCategories} from '../Firebase/DataApi'
 
-
-const data = [
-  {
-    name: "Transport",
-    price: 10,
-    color: "#4fa2d2",
-    legendFontColor: "#7F7F7F",
-    legendFontSize: 15
-  },
-  {
-    name: "Mancare",
-    price: 5000,
-    color: "#4878ae",
-    legendFontColor: "#7F7F7F",
-    legendFontSize: 15
-  },
-  {
-    name: "Vacante",
-    price: 1000,
-    color: "#5d5390",
-    legendFontColor: "#7F7F7F",
-    legendFontSize: 15
-  },
-  {
-    name: "Haine",
-    price: 500,
-    color: "#5c426e",
-    legendFontColor: "#7F7F7F",
-    legendFontSize: 15
-  },
-
-];
 const categories = ['Mancare', 'Haine', 'Transport', 'Vacante', 'Dulciuri', 'Machiaje', 'Electrocasnice']
 export default class Report extends Component {
+
+  state = {
+    categoriesList: []
+  };
   constructor(props) {
     super(props);
     //this.initData = Data
@@ -78,19 +50,33 @@ export default class Report extends Component {
 
     }
 }
-getCategoriesState = () => {
-  const newData =  getCategories()
-this.setState({ categoriesList: newData})
+
+
+onCategoryReceived = (categoriesList) => {
+  this.setState(prevState => ({
+    categoriesList: prevState.categoriesList = categoriesList
+  }));
 }
-  // onCategoriesReceived = (categoriesList) =>{
-  //   console.log(categoriesList);
-  //   this.setState(prevState =>  ({
-  //     categoriesList : prevState.categoriesList = categoriesList
-  //   }));
-  // }
-  // componentDidMount(){
-  //   this.setState({ categoriesList: getCategories()});
-  // }
+
+componentDidMount() {
+  getCategories(this.onCategoryReceived);
+}
+
+
+  onCategoryUpdated = (updatedCategory) => {
+    console.log("updated category: " + updatedCategory);
+          const newData = this.state.categoriesList.map(cat => {
+              if (cat.id === updatedCategory) {
+                  cat.id = updatedCategory.id
+                  return cat
+              }
+              return cat
+          })
+          this.setState({ categoriesList: newData })
+    }
+
+
+
   render() {
     return (
 
@@ -134,14 +120,8 @@ this.setState({ categoriesList: newData})
           placeholderTextColor={'#757575'}
           returnValue={"label"} // label or value
           callback={(res) => { 
-            console.log(this.state.categoriesList)
-            this.getCategoriesState()
-            console.log(aici)
-            console.log(this.state.categoriesList)
-          //  if (this.state.categoriesList.name == res)
-          //  {
-          //    this.state.categoriesList.isChecked = !this.prevState.categoriesList.isChecked;
-          //  }
+            console.log("in callback " + res)
+            this.onCategoryUpdated(res);
            }} // callback pentru a trimite datele la piechart
           rowBackgroundColor={"#eee"}
           rowHeight={40}

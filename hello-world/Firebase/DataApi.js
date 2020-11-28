@@ -34,7 +34,7 @@ export function addCategory(){
 }
 
 
-export async function getCategories()
+export async function getCategories(onCategoriesReceived)
 {
     var categoriesList = [];
     var snapshot = await firebase.firestore()
@@ -45,5 +45,17 @@ export async function getCategories()
         categoriesList.push(doc.data());
     })
 console.log(categoriesList)
-    return categoriesList;
+onCategoriesReceived(categoriesList)
+
+}
+
+
+export async function updateIsCheckedField(category, updateComplete){
+    console.log("Updating categories in firebase");
+
+    firebase.firestore()
+    .collection('Categories')
+    .doc(category.id).set(category)
+    .then(() => update({isChecked: !isChecked}))
+    .catch((error) => console.log(error));
 }
