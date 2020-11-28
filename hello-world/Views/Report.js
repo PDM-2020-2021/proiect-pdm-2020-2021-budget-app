@@ -3,9 +3,8 @@ import { StyleSheet, Text, View, Button, Dimensions } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 import CustomMultiPicker from "react-native-multiple-select-list";
 
-import {addCategory, getCategories} from '../Firebase/DataApi'
+import {addCategory, getCategories, updateIsCheckedField} from '../Firebase/DataApi'
 
-const categories = ['Mancare', 'Haine', 'Transport', 'Vacante', 'Dulciuri', 'Machiaje', 'Electrocasnice']
 export default class Report extends Component {
 
   state = {
@@ -63,19 +62,22 @@ componentDidMount() {
 }
 
 
-  onCategoryUpdated = (updatedCategory) => {
-    console.log("updated category: " + updatedCategory);
-          const newData = this.state.categoriesList.map(cat => {
-              if (cat.id === updatedCategory) {
-                  cat.id = updatedCategory.id
-                  return cat
-              }
-              return cat
-          })
-          this.setState({ categoriesList: newData })
+  // onCategoryUpdated = (updatedCategory) => {
+  //   console.log("updated category: " + updatedCategory);
+  //   updateIsCheckedField(updatedCategory);
+  //         // const newData = this.state.categoriesList.map(cat => {
+  //         //     if (cat.id === updatedCategory) {
+  //         //         cat.id = updatedCategory.id
+  //         //         return cat
+  //         //     }
+  //         //     return cat
+  //         // })
+  //         // this.setState({ categoriesList: newData })
+  //   }
+
+    componentDidUpdate(){
+      updateIsCheckedField(this.onCategoryReceived);
     }
-
-
 
   render() {
     return (
@@ -85,7 +87,7 @@ componentDidMount() {
           <Text style={styles.headerText}>Reports</Text>
         </View>
         <PieChart
-          data={this.state.categoriesList}
+         data ={this.state.categoriesList}
           width={Dimensions.get("window").width}
           height={280}
           chartConfig={{
@@ -112,7 +114,8 @@ componentDidMount() {
         {/* aici afisam totalul selectat */}
         <Text>Total:</Text>
         <CustomMultiPicker
-          options={categories}
+         options={ this.state.categoriesList.map(({ name }) => name)}
+         
           search={true} // should show search bar?
 
           multiple={true} //
@@ -121,7 +124,7 @@ componentDidMount() {
           returnValue={"label"} // label or value
           callback={(res) => { 
             console.log("in callback " + res)
-            this.onCategoryUpdated(res);
+            console.log("in callback " + res)
            }} // callback pentru a trimite datele la piechart
           rowBackgroundColor={"#eee"}
           rowHeight={40}

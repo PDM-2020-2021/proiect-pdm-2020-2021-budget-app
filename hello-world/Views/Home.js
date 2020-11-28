@@ -1,20 +1,36 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, FlatList, TextInput, Modal, TouchableHighlight, Button } from 'react-native';
+import NumberFormat from 'react-number-format';
 
+import { addCategory, getCategories, updateIsCheckedField } from '../Firebase/DataApi'
 
 export default class List extends Component {
+
+    state = {
+        data: []
+    };
     constructor(props) {
         super(props);
         //this.initData = Data
         this.state = {
-            data: [{ id: 1, text: 'Transport', price: '50 lei' },
-            { id: 2, text: 'Mancare', price: '50 lei' }],
+            data: [],
             isModalVisible: false,
-            inputText: '',
+            inputName: '',
             inputPrice: '',
             editedItem: 0,
             isNew: false,
         };
+    }
+
+
+    onCategoryReceived = (data) => {
+        this.setState(prevState => ({
+            data: prevState.data = data
+        }));
+    }
+
+    componentDidMount() {
+        getCategories(this.onCategoryReceived);
     }
 
     setModalVisible = (bool) => {
@@ -25,20 +41,22 @@ export default class List extends Component {
         this.setState({ isNew: bool })
     }
 
-    setInputText = (text, price) => {
-        this.setState({ inputText: text, inputPrice: price })
+    setInputText = (name, price) => {
+        this.setState({ inputName: name, inputPrice: price })
     }
 
     setEditedItem = (id) => {
         this.setState({ editedItem: id })
     }
 
+
+
     handleEditItem = (editedItem) => {
         console.log(this.state.isNew)
         if (!this.state.isNew) {
             const newData = this.state.data.map(item => {
                 if (item.id === editedItem) {
-                    item.text = this.state.inputText
+                    item.name = this.state.inputName
                     item.price = this.state.inputPrice
                     return item
                 }
@@ -47,9 +65,9 @@ export default class List extends Component {
             this.setState({ data: newData })
         }
         else {
-            this.state.data.push({ id: (this.state.data.length + 1), text: this.state.inputText, price: this.state.inputPrice })
+            this.state.data.push({ id: (this.state.data.length + 1), name: this.state.inputName, price: this.state.inputPrice })
             console.log("id : " + (this.state.data.length + 1))
-            console.log(this.state.inputText)
+            console.log(this.state.inputName)
             console.log(this.state.inputPrice)
             this.setIsNew(false)
         }
@@ -57,11 +75,11 @@ export default class List extends Component {
 
     renderItem = ({ item }) => (
         <View style={styles.flatList}>
-            <Text style={styles.text}> {item.text} </Text>
+            <Text style={styles.textCategory}> {item.name} </Text>
             <View>
-                <TouchableHighlight onPress={() => { this.setModalVisible(true); this.setInputText(item.text, item.price), this.setEditedItem(item.id) }}
+                <TouchableHighlight onPress={() => { this.setModalVisible(true); this.setInputText(item.name, item.price), this.setEditedItem(item.id) }}
                     underlayColor={'#f1f1f1'}>
-                    <Text style={styles.price}> {item.price} </Text>
+                    <NumberFormat value={item.price} displayType={'text'} thousandSeparator={true} renderText={value => <Text style={styles.price}>{value} lei</Text>} />
                 </TouchableHighlight>
             </View>
         </View>
@@ -75,8 +93,8 @@ export default class List extends Component {
                     <TouchableHighlight
                         style={styles.addButton}
                         onPress={() => { this.setModalVisible(true); this.setInputText(), this.setIsNew(true) }} underlayColor={'#f1f1f1'}>
-                        <View style={styles.item} >
-                            <Text style={styles.text}>+  </Text>
+                        <View >
+                            <Text style={styles.plusSign}>+  </Text>
                         </View>
                     </TouchableHighlight>
                 </View>
@@ -89,10 +107,7 @@ export default class List extends Component {
                     data={this.state.data}
                     keyExtractor={(item) => item.id.toString()}
                     renderItem={this.renderItem}
-                    // numColumns={2}                  // set number of columns 
-
-
-                    ListHeaderComponent={() => <Text style={styles.text} >Category       Price</Text>}
+                    ListHeaderComponent={() => <Text style={styles.text} >Category                            Price</Text>}
 
                 />
                 <Modal animationType="fade" visible={this.state.isModalVisible}
@@ -100,10 +115,11 @@ export default class List extends Component {
                     <View style={styles.modalView}>
                         <Text style={styles.text}>Change text:</Text>
                         <TextInput
+
+                            editable={this.state.isNew}
                             style={styles.textInput}
-                            onChangeText={(text) => { this.setState({ inputText: text }); console.log('state ', this.state.inputText) }}
-                            defaultValue={this.state.inputText}
-                            editable={true}
+                            onChangeText={(name) => { this.setState({ inputName: name }); console.log('state ', this.state.inputName) }}
+                            defaultValue={this.state.inputName}
                             multiline={false}
                             maxLength={200}
                         />
@@ -115,6 +131,7 @@ export default class List extends Component {
                             multiline={false}
                             maxLength={200}
                         />
+
                         <TouchableHighlight onPress={() => { this.handleEditItem(this.state.editedItem); this.setModalVisible(false) }}
                             style={[styles.touchableHighlight, { backgroundColor: '#41cac6' }]} underlayColor={'#f1f1f1'}>
                             <Text style={styles.text}>Save</Text>
@@ -203,17 +220,37 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         flexWrap: "wrap",
+        borderColor: 'gray',
+        borderBottomWidth: 2,
     },
     addButton: {
-        borderWidth: 1,
-        borderColor: 'rgba(0,0,0,0.2)',
+        borderWidth: 0,
+        borderColor: 'rgba(0,0,0,0)',
         alignItems: 'center',
         justifyContent: 'center',
         alignSelf: 'flex-end',
         width: 70,
         height: 70,
-        backgroundColor: '#4fa2d2',
+        backgroundColor: '#ebeef2',
         borderRadius: 50,
-        marginBottom: 10
+        marginBottom: 10,
+        marginRight: 10
+    },
+    plusSign: {
+        color: "#000000",
+        fontSize: 40,
+        fontWeight: 'bold',
+        marginLeft: 20, textDecorationLine: 'none'
+    }
+    ,
+    textCategory: {
+        width: '50%',
+        marginVertical: 30,
+        fontSize: 20,
+        fontWeight: 'bold',
+        marginLeft: 10
+    },
+    touchablePrice: {
+        width: '50%'
     }
 })
