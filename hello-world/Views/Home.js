@@ -2,9 +2,14 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, FlatList, TextInput, Modal, TouchableHighlight, Button } from 'react-native';
 import NumberFormat from 'react-number-format';
 
-import { addCategory, getCategories, updateIsCheckedField } from '../Firebase/DataApi'
+import { addCategory, getCategories, setItemIncategory, updateIsCheckedField } from '../Firebase/DataApi'
+
+import * as firebase from 'firebase';
+import 'firebase/firestore';
 
 export default class List extends Component {
+
+    
 
     state = {
         data: []
@@ -22,11 +27,32 @@ export default class List extends Component {
         };
     }
 
+    
 
     onCategoryReceived = (data) => {
-        this.setState(prevState => ({
-            data: prevState.data = data
+        this.setState(prevStat => ({
+            data: prevStat.data = data
         }));
+    }
+
+    generateHex(){
+        var r=Math.floor(Math.random() * 255)
+        var g=Math.floor(Math.random() * 255)
+        var b=Math.floor(Math.random() * 255)
+        if(r<16)
+        {
+            r+=16
+        }
+        if(g<16)
+        {
+            g+=16
+        }
+        if(b<16)
+        {
+            b+=16
+        }
+        var hex="#"+r.toString(16)+g.toString(16)+b.toString(16)
+        return hex
     }
 
     componentDidMount() {
@@ -54,8 +80,9 @@ export default class List extends Component {
     handleEditItem = (editedItem) => {
         console.log(this.state.isNew)
         if (!this.state.isNew) {
+            // console.log(this.generateHex())
             const newData = this.state.data.map(item => {
-                if (item.id === editedItem) {
+                if (item.id == editedItem) {
                     item.name = this.state.inputName
                     item.price = this.state.inputPrice
                     return item
@@ -65,6 +92,20 @@ export default class List extends Component {
             this.setState({ data: newData })
         }
         else {
+            
+           
+            var setData={
+                color: this.generateHex(),
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                id:this.state.data.length+1,
+                isChecked: false,
+                legendFontColor: "#7F7F7F",
+                legendFontSize: 15,
+                name: this.state.inputName,
+                price: parseInt(this.state.inputPrice,10)
+              }
+              setItemIncategory(setData)
+              
             this.state.data.push({ id: (this.state.data.length + 1), name: this.state.inputName, price: this.state.inputPrice })
             console.log("id : " + (this.state.data.length + 1))
             console.log(this.state.inputName)
@@ -115,7 +156,6 @@ export default class List extends Component {
                     <View style={styles.modalView}>
                         <Text style={styles.text}>Change text:</Text>
                         <TextInput
-
                             editable={this.state.isNew}
                             style={styles.textInput}
                             onChangeText={(name) => { this.setState({ inputName: name }); console.log('state ', this.state.inputName) }}
@@ -161,6 +201,7 @@ const styles = StyleSheet.create({
         color: 'white',
     },
     contentContainer: {
+        flex: 1,
         backgroundColor: 'white',
     },
     item: {
@@ -217,7 +258,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     flatList: {
-        flex: 1,
+        
         flexDirection: "row",
         flexWrap: "wrap",
         borderColor: 'gray',

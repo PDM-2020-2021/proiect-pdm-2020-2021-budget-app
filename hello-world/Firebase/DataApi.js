@@ -67,3 +67,9 @@ export async function updateIsCheckedField(category){
     });
   
 }
+
+export async function setItemIncategory(data)
+{
+const res=await db.collection("Categories").add(data);
+console.log(res)
+}
