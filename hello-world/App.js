@@ -1,6 +1,6 @@
 
 import { StyleSheet, Text, View } from 'react-native';
-import Home from "./Views/Home";
+import Home from '../hello-world/Home/index.js';
 import Report from "./Views/Report";
 import Bills from "./Views/Bills"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';

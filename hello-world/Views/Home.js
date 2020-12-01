@@ -9,14 +9,9 @@ import 'firebase/firestore';
 
 export default class List extends Component {
 
-    
-
-    state = {
-        data: []
-    };
+    //constructor
     constructor(props) {
         super(props);
-        //this.initData = Data
         this.state = {
             data: [],
             isModalVisible: false,
@@ -27,6 +22,17 @@ export default class List extends Component {
         };
     }
 
+//state
+    // state = {
+    //     data: []
+    // };
+
+//lifecycles
+    componentDidMount() {
+        getCategories(this.onCategoryReceived);
+    }
+
+  
     
 
     onCategoryReceived = (data) => {
@@ -34,7 +40,7 @@ export default class List extends Component {
             data: prevStat.data = data
         }));
     }
-
+//librarie
     generateHex(){
         var r=Math.floor(Math.random() * 255)
         var g=Math.floor(Math.random() * 255)
@@ -53,10 +59,6 @@ export default class List extends Component {
         }
         var hex="#"+r.toString(16)+g.toString(16)+b.toString(16)
         return hex
-    }
-
-    componentDidMount() {
-        getCategories(this.onCategoryReceived);
     }
 
     setModalVisible = (bool) => {
@@ -83,7 +85,7 @@ export default class List extends Component {
             // console.log(this.generateHex())
             const newData = this.state.data.map(item => {
                 if (item.id == editedItem) {
-                    item.name = this.state.inputName
+                    //item.name = this.state.inputName
                     item.price = this.state.inputPrice
                     return item
                 }
@@ -120,7 +122,15 @@ export default class List extends Component {
             <View>
                 <TouchableHighlight onPress={() => { this.setModalVisible(true); this.setInputText(item.name, item.price), this.setEditedItem(item.id) }}
                     underlayColor={'#f1f1f1'}>
-                    <NumberFormat value={item.price} displayType={'text'} thousandSeparator={true} renderText={value => <Text style={styles.price}>{value} lei</Text>} />
+                    <NumberFormat 
+                        value={item.price}
+                        displayType={'text'}
+                        thousandSeparator={true}
+                        renderText={value =>
+                            <Text 
+                                style={styles.price}>
+                                {value} lei
+                             </Text>} />
                 </TouchableHighlight>
             </View>
         </View>
@@ -173,7 +183,7 @@ export default class List extends Component {
                         />
 
                         <TouchableHighlight onPress={() => { this.handleEditItem(this.state.editedItem); this.setModalVisible(false) }}
-                            style={[styles.touchableHighlight, { backgroundColor: '#41cac6' }]} underlayColor={'#f1f1f1'}>
+                            style={[styles.touchableHighlight]} underlayColor={'#f1f1f1'}>
                             <Text style={styles.text}>Save</Text>
                         </TouchableHighlight>
                     </View>
