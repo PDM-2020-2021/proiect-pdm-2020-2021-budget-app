@@ -6,16 +6,19 @@ import { categoriesCollection } from ".";
 
 // va impartiti pe fisiere mai mici toate functiile de CRUD per fiecare coletie din Firebase
 // posibil sa mai faceti gen: bills.js, reports.js
-
+ar colors = require('nice-color-palettes');
 export async function addCategory(payload) {
   // seteaza un ID random
   // nu as folosii indexi (1, 2, 3, 4..) nu sunt reliable, daca stergeti itemi se pot duplica ID-uri
-  const id = uuid();
+  const id = uuid().replace(/\D/g,'').substr(0,5);
   return categoriesCollection
     .doc(id)
     .set({
       id,
       ...payload,
+      color: colors[Math.floor(Math.random() * 100 ) + 1][0],
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 15,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     })
     .catch((error) => console.log(error));
