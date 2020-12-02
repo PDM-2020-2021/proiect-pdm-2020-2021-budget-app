@@ -52,6 +52,10 @@ const timeToString = (time) => {
 };
 
 const Bills = props => {
+  //un fel de set state
+
+  //constructor cu items
+  //this.setState de items
   const [items, setItems] = useState({});
 
   const loadItems = (day) => {
@@ -109,7 +113,8 @@ const Bills = props => {
       <View style={{ flex: 1 }}>
         <Agenda
           items={items}
-          loadItemsForMonth={loadItems}
+          onCalendarToggled={calendarOpened => this.setState({ calendarOpened })}
+           loadItemsForMonth={loadItems}
           selected={'2020-11-25'}
           renderItem={renderItem}
         />

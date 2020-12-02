@@ -3,53 +3,32 @@ import { StyleSheet, Text, View, Button, Dimensions } from "react-native";
 import { PieChart } from "react-native-chart-kit";
 import CustomMultiPicker from "react-native-multiple-select-list";
 
-import {addCategory, getCategories, updateIsCheckedField} from '../Firebase/DataApi'
+import {addCategory, getCategories, updateIsCheckedField} from '../../hello-world/Firebase/categories'
 
 export default class Report extends Component {
 
-  state = {
-    categoriesList: []
-  };
+  // state = {
+  //   categoriesList: []
+  // };
   constructor(props) {
     super(props);
     //this.initData = Data
     this.state = {
 
-          categoriesList:[ 
-          //   {
-          //   name: "Transport",
-          //   price: 10,
-          //   color: "#4fa2d2",
-          //   legendFontColor: "#7F7F7F",
-          //   legendFontSize: 15
-          // },
-          // {
-          //   name: "Mancare",
-          //   price: 5000,
-          //   color: "#4878ae",
-          //   legendFontColor: "#7F7F7F",
-          //   legendFontSize: 15
-          // },
-          // {
-          //   name: "Vacante",
-          //   price: 1000,
-          //   color: "#5d5390",
-          //   legendFontColor: "#7F7F7F",
-          //   legendFontSize: 15
-          // },
-          // {
-          //   name: "Haine",
-          //   price: 500,
-          //   color: "#5c426e",
-          //   legendFontColor: "#7F7F7F",
-          //   legendFontSize: 15
-          // }
-        
-      ]
+          categoriesList:[]
 
     }
 }
 
+componentDidMount() {
+  getCategories(this.onCategoryReceived);
+  console.log("reports" + this.state.categoriesList)
+}
+
+//nu face set state in update
+componentDidUpdate(){
+  updateIsCheckedField(this.onCategoryReceived);
+}
 
 onCategoryReceived = (categoriesList) => {
   this.setState(prevState => ({
@@ -57,9 +36,6 @@ onCategoryReceived = (categoriesList) => {
   }));
 }
 
-componentDidMount() {
-  getCategories(this.onCategoryReceived);
-}
 
 
   // onCategoryUpdated = (updatedCategory) => {
@@ -75,9 +51,6 @@ componentDidMount() {
   //         // this.setState({ categoriesList: newData })
   //   }
 
-    componentDidUpdate(){
-      updateIsCheckedField(this.onCategoryReceived);
-    }
 
   render() {
     return (

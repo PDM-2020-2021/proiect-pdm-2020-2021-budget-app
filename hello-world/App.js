@@ -1,7 +1,7 @@
 
 import { StyleSheet, Text, View } from 'react-native';
-import Home from "./Views/Home";
-import Report from "./Views/Report";
+import Home from '../hello-world/Home/index.js';
+import Report from "../hello-world/Reports/index.js";
 import Bills from "./Views/Bills"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React, { Component } from 'react';
