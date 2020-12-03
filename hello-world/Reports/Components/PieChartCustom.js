@@ -16,7 +16,7 @@ export default class PieChartCustom extends Component {
         // Typical usage (don't forget to compare props):
         if (this.props.selectedData !== prevProps.selectedData) {
             console.log('data state has changed.')
-            console.log(this.props.onDataChange);
+            //console.log(this.props.onDataChange);
         }
       }
       
@@ -24,7 +24,6 @@ export default class PieChartCustom extends Component {
       //   const newData = [ {id:15278, name:'flori', price:100, color: '#157f8a',legendFontColor: "#7F7F7F",legendFontSize: 15},
       //  {id:16734, name:'masini', price:150, color: '#71a51b',legendFontColor: "#7F7F7F",legendFontSize: 15},
       //   {id:22384, name:'mancare', price:175,  color: '#199f10',legendFontColor: "#7F7F7F",legendFontSize: 15}]
-      const {selectedData} = this.state;
         return (
             <PieChart
                 data={this.props.onDataChange}

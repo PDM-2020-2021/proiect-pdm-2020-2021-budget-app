@@ -118,7 +118,7 @@ export default class Home extends Component {
             underlayColor={"#f1f1f1"}
           >
             <View>
-              <Text style={styles.plusSign}>+ </Text>
+              <Text style={styles.plusSign}>+  </Text>
             </View>
           </TouchableHighlight>
         </View>

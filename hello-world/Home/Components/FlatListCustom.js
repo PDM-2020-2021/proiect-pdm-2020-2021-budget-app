@@ -38,7 +38,7 @@ export default class FlatListCustom extends Component {
         keyExtractor={(item) => item.id.toString()}
         renderItem={this.renderItem}
         ListHeaderComponent={() => (
-          <Text style={styles.text}>Category Price</Text>
+          <Text style={styles.text}>Category                           Price</Text>
         )}
       />
     );

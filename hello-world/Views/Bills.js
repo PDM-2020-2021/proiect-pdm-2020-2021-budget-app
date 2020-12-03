@@ -3,49 +3,6 @@ import { View, TouchableOpacity, Text, StyleSheet, TouchableHighlight } from 're
 import { Agenda } from 'react-native-calendars';
 import { Card, Avatar } from 'react-native-paper';
 
-const styles = StyleSheet.create({
-  header: {
-    height: 140,
-    backgroundColor: '#41cac6',
-    alignItems: 'flex-start',
-    justifyContent: 'center',
-    flexDirection: 'row'
-  },
-  headerText: {
-    flex: 1,
-    alignSelf: 'flex-start',
-    marginTop: 60,
-    marginLeft: 10,
-    fontSize: 40,
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  item: {
-    flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: 'white',
-    alignItems: 'center',
-
-  },
-  addButton: {
-    borderWidth: 1,
-    borderColor: 'rgba(0,0,0,0.2)',
-    alignItems: 'center',
-    justifyContent: 'center',
-    alignSelf: 'flex-end',
-    width: 70,
-    height: 70,
-    backgroundColor: '#4fa2d2',
-    borderRadius: 50,
-    marginBottom: 10
-  },
-  text: {
-    marginVertical: 30,
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginLeft: 10,
-  },
-});
 const timeToString = (time) => {
   const date = new Date(time);
   return date.toISOString().split('T')[0];
@@ -126,3 +83,47 @@ const Bills = props => {
 
 export default Bills;
 
+
+const styles = StyleSheet.create({
+  header: {
+    height: 140,
+    backgroundColor: '#41cac6',
+    alignItems: 'flex-start',
+    justifyContent: 'center',
+    flexDirection: 'row'
+  },
+  headerText: {
+    flex: 1,
+    alignSelf: 'flex-start',
+    marginTop: 60,
+    marginLeft: 10,
+    fontSize: 40,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  item: {
+    flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: 'white',
+    alignItems: 'center',
+
+  },
+  addButton: {
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.2)',
+    alignItems: 'center',
+    justifyContent: 'center',
+    alignSelf: 'flex-end',
+    width: 70,
+    height: 70,
+    backgroundColor: '#4fa2d2',
+    borderRadius: 50,
+    marginBottom: 10
+  },
+  text: {
+    marginVertical: 30,
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginLeft: 10,
+  },
+});

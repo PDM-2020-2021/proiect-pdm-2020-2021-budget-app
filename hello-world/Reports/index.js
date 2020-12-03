@@ -51,8 +51,10 @@ componentDidMount() {
         <View style={styles.header}>
           <Text style={styles.headerText}>Reports</Text>
         </View>
+        
         <PieChartCustom selectedData={selectedData} onDataChange={this.onDataChange.bind(this), selectedData}/>
-        <MultiPickerCustom data={data} onDataChange={this.onDataChange.bind(this)}/>
+        <Text>  Select the categories to be displayed in PieChart:</Text>
+        <MultiPickerCustom data={data} onDataChange={this.onDataChange.bind(this)} />
 
       </View>
 
