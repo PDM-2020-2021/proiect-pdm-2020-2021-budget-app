@@ -45,22 +45,22 @@ export default class Home extends Component {
   // treceti prin mai multi indecsi si vedeti ce culori va plac
   // apoi destructurati intr-un array de culori chosenColors = [...colors[0], ...colors[4], ...ect];
   // as creea un fisier in src numit utils.js l-as exporta de acolo
-  generateHex() {
-    var r = Math.floor(Math.random() * 255);
-    var g = Math.floor(Math.random() * 255);
-    var b = Math.floor(Math.random() * 255);
-    if (r < 16) {
-      r += 16;
-    }
-    if (g < 16) {
-      g += 16;
-    }
-    if (b < 16) {
-      b += 16;
-    }
-    var hex = "#" + r.toString(16) + g.toString(16) + b.toString(16);
-    return hex;
-  }
+  // generateHex() {
+  //   var r = Math.floor(Math.random() * 255);
+  //   var g = Math.floor(Math.random() * 255);
+  //   var b = Math.floor(Math.random() * 255);
+  //   if (r < 16) {
+  //     r += 16;
+  //   }
+  //   if (g < 16) {
+  //     g += 16;
+  //   }
+  //   if (b < 16) {
+  //     b += 16;
+  //   }
+  //   var hex = "#" + r.toString(16) + g.toString(16) + b.toString(16);
+  //   return hex;
+  // }
 
   setModalVisible = (bool) => {
     this.setState({ isModalVisible: bool });

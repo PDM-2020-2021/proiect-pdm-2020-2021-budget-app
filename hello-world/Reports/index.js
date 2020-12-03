@@ -12,55 +12,47 @@ export default class Report extends Component {
     this.state = {
 
         data: [],
+        selectedData: []
     }
 }
 
 componentDidMount() {
   getCategories(this.onCategoryReceived);
-  //console.log("reports" + this.state.data)
 }
 
-//nu face set state in update
-// componentDidUpdate(){
-//   updateIsCheckedField(this.onCategoryReceived);
-// }
 
-
-  // Aici setati si culoarea pentru fiecare categorie
-  // Read la urmatoarea functie ca sa intelegeti
   onCategoryReceived = (data) => {
-    // import { chosenColors } from ../blalala/utils.js;
-    // data.map((item, index) => ({...item, color: chosenColors[index]}));
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+
     this.setState({ data });
   };
 
 
 
-  // onCategoryUpdated = (updatedCategory) => {
-  //   console.log("updated category: " + updatedCategory);
-  //   updateIsCheckedField(updatedCategory);
-  //         // const newData = this.state.categoriesList.map(cat => {
-  //         //     if (cat.id === updatedCategory) {
-  //         //         cat.id = updatedCategory.id
-  //         //         return cat
-  //         //     }
-  //         //     return cat
-  //         // })
-  //         // this.setState({ categoriesList: newData })
-  //   }
+  onDataChange = async (selectedItems) => {
+    //console.log("selected items:")
+    //console.log(selectedItems);
+          const result = this.state.data.filter(data1 => {
+            let arr = selectedItems.filter(item => data1.name === item)
+            return !(arr.length === 0)
+          });
+         // console.log("result:")
+         // console.log(result)
+          await this.setState({selectedData: result})
+         //console.log("state selectedData")
+         // console.log(this.state.selectedData);
+    }
 
 
   render() {
-    const { data } = this.state;
+    const { data, selectedData } = this.state;
     return (
        
       <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.headerText}>Reports</Text>
         </View>
-        <PieChartCustom data={data}/>
-        <MultiPickerCustom data={data}/>
+        <PieChartCustom selectedData={selectedData} onDataChange={this.onDataChange.bind(this), selectedData}/>
+        <MultiPickerCustom data={data} onDataChange={this.onDataChange.bind(this)}/>
 
       </View>
 

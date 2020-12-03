@@ -4,6 +4,7 @@ import CustomMultiPicker from "react-native-multiple-select-list";
 export default class MultiPickerCustom extends Component {
 
     render() {
+        //this.props.onDataChange(selected);
         return(
 
             <CustomMultiPicker
@@ -16,8 +17,11 @@ export default class MultiPickerCustom extends Component {
                 placeholderTextColor={'#757575'}
                 returnValue={"label"} // label or value
                 callback={(res) => {
-                    console.log("in callback " + res)
-                    console.log("in callback " + res)
+                    var newRes = [];
+                    //newRes=res.split(",");
+                    // newRes.push(res.for)
+                   this.props.onDataChange(res);
+                    console.log(res)
                 }} // callback pentru a trimite datele la piechart
                 rowBackgroundColor={"#eee"}
                 rowHeight={40}
@@ -27,6 +31,7 @@ export default class MultiPickerCustom extends Component {
                 selectedIconName={"md-checkbox-outline"}
                 scrollViewHeight={250}
                 selected={[]} // list of options which are selected by default
+                
             />
         )
     }
