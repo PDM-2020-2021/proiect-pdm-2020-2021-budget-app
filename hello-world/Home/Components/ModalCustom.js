@@ -16,7 +16,7 @@ export default class ModalCustom extends Component {
 
     this.state = {
       name: "",
-      price: "",
+      price: 0,
     };
   }
 
