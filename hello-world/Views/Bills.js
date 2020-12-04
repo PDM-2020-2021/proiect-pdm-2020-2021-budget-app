@@ -65,10 +65,7 @@ const Bills = props => {
       const strTime = timeToString(time);
       if (!items[strTime]) {
         items[strTime] = [];
-        items[strTime].push({
-          name: 'Factura la ' + strTime + ' #',
-
-        });
+        items[strTime].push({name: 'Factura la ' + strTime + ' #'});
       }
       const newItems = {};
       Object.keys(items).forEach((key) => {
@@ -111,13 +108,13 @@ const Bills = props => {
         </TouchableHighlight>
       </View>
       <View style={{ flex: 1 }}>
-        <Agenda
+        {/* <Agenda
           items={items}
           onCalendarToggled={calendarOpened => this.setState({ calendarOpened })}
            loadItemsForMonth={loadItems}
           selected={'2020-11-25'}
           renderItem={renderItem}
-        />
+        /> */}
       </View>
 
     </View>
