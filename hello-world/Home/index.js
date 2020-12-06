@@ -8,6 +8,7 @@ import {
   getCategories,
   addCategory,
   updateCategory,
+  deleteCategory
 } from "../Firebase/categories";
 
 export default class Home extends Component {
@@ -28,39 +29,10 @@ export default class Home extends Component {
     getCategories(this.onCategoryReceived);
   }
 
-  // Aici setati si culoarea pentru fiecare categorie
-  // Read la urmatoarea functie ca sa intelegeti
   onCategoryReceived = (data) => {
-    // import { chosenColors } from ../blalala/utils.js;
-    // data.map((item, index) => ({...item, color: chosenColors[index]}));
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
     this.setState({ data });
   };
 
-  //librarie
-  // https://www.npmjs.com/package/nice-color-palettes
-  // nu ar trebuii tinute culorile in BD, nu sunt date importate
-  // in loc de var colors = require('nice-color-palettes') faceti import colors from "nice-color-palettes"
-  // colors[0] = paleta de 5 culori (sper. nu m-am jucat cu libraria doar citesc documentatia)
-  // treceti prin mai multi indecsi si vedeti ce culori va plac
-  // apoi destructurati intr-un array de culori chosenColors = [...colors[0], ...colors[4], ...ect];
-  // as creea un fisier in src numit utils.js l-as exporta de acolo
-  // generateHex() {
-  //   var r = Math.floor(Math.random() * 255);
-  //   var g = Math.floor(Math.random() * 255);
-  //   var b = Math.floor(Math.random() * 255);
-  //   if (r < 16) {
-  //     r += 16;
-  //   }
-  //   if (g < 16) {
-  //     g += 16;
-  //   }
-  //   if (b < 16) {
-  //     b += 16;
-  //   }
-  //   var hex = "#" + r.toString(16) + g.toString(16) + b.toString(16);
-  //   return hex;
-  // }
 
   setModalVisible = (bool) => {
     this.setState({ isModalVisible: bool });
@@ -84,9 +56,6 @@ export default class Home extends Component {
     this.setIsNew(true);
   };
 
-  // a trebuit sa adaug functia asta aici si sa o trimit ca props
-  // pentru ca voiam sa fac refetch la date dupa ce adaug/editez o categorie
-  // daca era folosit redux, functia asta putea fi trimisa direct la Modal fara a avea nevoie sa o tirmit prin props de la parinte
   handleSave = async (payload) => {
     const { isNew, itemToEdit } = this.state;
 
@@ -101,11 +70,19 @@ export default class Home extends Component {
     this.setState({ itemToEdit: null });
   };
 
+  handleCancel =  () =>{
+    this.setModalVisible(false);
+    this.setState({ itemToEdit: null });
+  }
+  handleDelete= async(itemId) =>{
+    await deleteCategory(itemId);
+    console.log("am sters");
+    console.log(item);
+    getCategories(this.onCategoryReceived);
+  }
+
   render() {
     // ES6 destructuring
-    // este echivalentul la a scrie
-    // const data = this.state.data;
-    // const isNew = this.state.new; ... samd
     const { data, isNew, itemToEdit, isModalVisible } = this.state;
 
     return (
@@ -122,19 +99,20 @@ export default class Home extends Component {
             </View>
           </TouchableHighlight>
         </View>
-        <FlatListCustom data={data} setItemToEdit={this.setItemToEdit} />
-        {/* this is called conditional rendering
-            Modalul imi este randat doar daca isModalVisible = true
+        <FlatListCustom 
+        data={data}
+        setItemToEdit={this.setItemToEdit}
+        onDelete={this.handleDelete.bind(this)} />
+        {/* Modalul imi este randat doar daca isModalVisible = true
             {Condition && <Component 1 /> || <Component 2 />}: if true render Comp1 else render Comp2
-            echivalent se mai poate scrie: 
-            {condition ?  <Component1 /> : <Component2 />} this is called ternary expression
-            mereu trebuie adaugat intre acolade in functia render() functii care returneaza o componenta 
         */}
         {isModalVisible && (
           <ModalCustom
             itemToEdit={itemToEdit}
             isNew={isNew}
             onSave={this.handleSave}
+            onCancel={this.handleCancel.bind(this)}
+           
           />
         )}
       </View>

@@ -10,8 +10,7 @@ firebase.initializeApp({
 // Initialize Cloud Firestore through Firebase
 export const db = firebase.firestore();
 
-// ca sa nu va repetati intr-una cu db.collection(*collection_name*)
-// exportati de aici fiecare coletie pe care o mai puteti avea
+// ca sa nu mai repet db.collection(*collection_name*)
 export const categoriesCollection = db.collection("Categories");
 
 export default firebase;

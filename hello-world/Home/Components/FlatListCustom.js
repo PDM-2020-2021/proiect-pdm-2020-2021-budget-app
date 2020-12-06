@@ -5,11 +5,18 @@ import {
   StyleSheet,
   View,
   TouchableHighlight,
+  Button,
 } from "react-native";
 import NumberFormat from "react-number-format";
 import { Typography, Colors, Spacing, Header, Buttons } from "../../Styles";
 
 export default class FlatListCustom extends Component {
+
+  handleDelete= (categoryId)=>{
+    console.log("in flat list sterg")
+    console.log(categoryId)
+this.props.onDelete(categoryId);
+  }
   renderItem = ({ item }) => (
     <View style={styles.flatList}>
       <Text style={styles.textCategory}> {item.name} </Text>
@@ -27,6 +34,11 @@ export default class FlatListCustom extends Component {
             )}
           />
         </TouchableHighlight>
+        <Button 
+         onPress={() =>this.handleDelete(item.id)}
+         color="#ebeef2"
+        title="Delete"/>
+          
       </View>
     </View>
   );

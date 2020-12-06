@@ -20,8 +20,7 @@ export default class ModalCustom extends Component {
     };
   }
 
-  // daca am item to edit, seteaza state-ul cu numele si pretul itemului ce vreau sa-l editez
-  // this can be extended cu orice alte data aveti nevoie sa mai afisati in modal
+
   componentDidMount() {
     const { itemToEdit } = this.props;
     if (itemToEdit) {
@@ -29,13 +28,12 @@ export default class ModalCustom extends Component {
     }
   }
 
-  // good practice. Daca am o functie care ar ocupa mai multe de 1 linie de cod, scrieti-o separat
-  // am facut o noua functie unde
-  // iau functia de onSave trimita din parinte pe props
-  // adaug price si name ca payload de pe state-ul intern
   handleSave = () => {
     const { name, price } = this.state;
     this.props.onSave({ name, price });
+  };
+  handleCancel= () =>{
+    this.props.onCancel();
   };
 
   render() {
@@ -48,18 +46,19 @@ export default class ModalCustom extends Component {
        // onRequestClose={() => this.props.setModalVisible(false)}
       >
         <View style={styles.modalView}>
-          <Text style={styles.text}>Change text:</Text>
+          <Text style={styles.text}>Add a new category:</Text>
+          
           <TextInput
-            // tobechanged
+            placeholder={'Category name'}
             editable={true}
             style={styles.textInput}
-            // doar o linie de cod, no trebuie sa o scriu separat
             onChangeText={(name) => this.setState({ name })}
             defaultValue={name}
             multiline={false}
             maxLength={200}
           />
           <TextInput
+          placeholder={'Amount ( without currency )'}
             style={styles.textInput}
             onChangeText={(price) => this.setState({ price })}
             defaultValue={price}
@@ -68,6 +67,15 @@ export default class ModalCustom extends Component {
             maxLength={200}
           />
 
+          <View style={styles.buttons}>
+          <TouchableHighlight
+            onPress={this.handleCancel}
+            style={[styles.touchableHighlight]}
+            underlayColor={"#f1f1f1"}
+          >
+            <Text style={styles.text}>Cancel</Text>
+          </TouchableHighlight>
+
           <TouchableHighlight
             onPress={this.handleSave}
             style={[styles.touchableHighlight]}
@@ -75,12 +83,18 @@ export default class ModalCustom extends Component {
           >
             <Text style={styles.text}>Save</Text>
           </TouchableHighlight>
+          </View>
         </View>
       </Modal>
     );
   }
 }
 const styles = StyleSheet.create({
+  buttons: {
+flex:1,
+flexDirection: "row",
+
+  },
   header: {
     ...Header.headerStyles,
   },
@@ -129,11 +143,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   touchableHighlight: {
-    // backgroundColor: '#41cac6',
     ...Colors.whiteBackground,
     marginVertical: 10,
     alignSelf: "stretch",
     alignItems: "center",
+    width: '30%',
+    height: '15%'
   },
   flatList: {
     flexDirection: "row",

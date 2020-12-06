@@ -13,10 +13,8 @@ export default class PieChartCustom extends Component {
     }
 }
     componentDidUpdate(prevProps) {
-        // Typical usage (don't forget to compare props):
         if (this.props.selectedData !== prevProps.selectedData) {
             console.log('data state has changed.')
-            //console.log(this.props.onDataChange);
         }
       }
       
@@ -49,7 +47,7 @@ export default class PieChartCustom extends Component {
                 backgroundColor="transparent"
                 paddingLeft="15"
                 absolute
-            ></PieChart>
+            />
 )};
 
 }
