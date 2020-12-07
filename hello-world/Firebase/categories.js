@@ -1,6 +1,7 @@
 import firebase from ".";
 import { v4 as uuid } from 'uuid'
 import { categoriesCollection, db } from ".";
+import { parse } from "react-native-svg";
 
 
 var colors = require('nice-color-palettes');
