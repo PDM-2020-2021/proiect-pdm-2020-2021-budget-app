@@ -44,6 +44,9 @@ export class CustomAgenda extends Component {
           }
         }
 
+        this.state.items['2021-05-25'].push({
+          name: 'Factura la Netflix ' + '2020-12-04',
+        });
       const newItems = {};
       Object.keys(this.state.items).forEach(key => {
         newItems[key] = this.state.items[key];

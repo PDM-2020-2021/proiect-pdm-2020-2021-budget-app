@@ -1,11 +1,42 @@
 import React, { Component } from "react";
 import { View, TouchableOpacity, Text, StyleSheet, TouchableHighlight } from 'react-native';
 import { CustomAgenda } from './Components/CustomAgenda';
+import  AgendaModal  from './Components/AgendaModal';
+import {
+  getPayments,
+  addPayment,
+} from "../Firebase/Bill";
+
 export default class Bills extends Component {
 
   constructor(props) {
     super(props);
+    this.state={isModalVisible: false}
   };
+
+  componentDidMount() {
+    getPayments(this.onPaymentReceived);
+  }
+
+  onPaymentReceived = (data) => {
+    this.setState({ data });
+  };
+
+  setModalVisible = (bool) => {
+    this.setState({ isModalVisible: bool });
+  };
+
+  handleSave = async (payload) => {
+    await addPayment(payload);
+    this.setModalVisible(false);
+  };
+
+  handleCancel =  () =>{
+    this.setModalVisible(false);
+    console.log(billName)
+    console.log( amount)
+    console.log(day)
+  }
 
   render() {
     return (
@@ -15,7 +46,7 @@ export default class Bills extends Component {
           <TouchableHighlight
             style={styles.addButton}
             onPress={() => {
-              //this.setModalVisible(true); this.setInputText(), this.setIsNew(true) 
+              this.setModalVisible(true); 
             }} underlayColor={'#f1f1f1'}>
             <View>
               <Text style={styles.plusSign}>+  </Text>
@@ -25,6 +56,13 @@ export default class Bills extends Component {
         <View style={{ flex: 1 }}>
           <CustomAgenda />
         </View>
+        {this.state.isModalVisible && (
+          <AgendaModal
+            visibleModal={this.setModalVisible}
+            onSave={this.handleSave.bind(this)}
+            onCancel={this.handleCancel.bind(this)}
+          />
+        )}
       </View>
 
     );

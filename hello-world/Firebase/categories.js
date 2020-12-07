@@ -38,7 +38,10 @@ export async function getCategories(onCategoriesReceived) {
   onCategoriesReceived(categoriesList);
 }
 export async function updateCategory(id, payload) {
+  var aux=parseInt(payload.price)
+  payload.price=aux;
   return categoriesCollection.doc(id).update(payload);
+  
 }
 
 export async function deleteCategory(id){

@@ -12,5 +12,6 @@ export const db = firebase.firestore();
 
 // ca sa nu mai repet db.collection(*collection_name*)
 export const categoriesCollection = db.collection("Categories");
+export const recurentPaymentsCollection = db.collection("ReccurentPayments");
 
 export default firebase;
