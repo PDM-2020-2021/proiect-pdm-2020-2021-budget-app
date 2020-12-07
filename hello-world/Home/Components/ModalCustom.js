@@ -16,7 +16,7 @@ export default class ModalCustom extends Component {
 
     this.state = {
       name: "",
-      price: 0,
+      price:"",
     };
   }
 
@@ -24,7 +24,7 @@ export default class ModalCustom extends Component {
   componentDidMount() {
     const { itemToEdit } = this.props;
     if (itemToEdit) {
-      this.setState({ name: itemToEdit.name, price: itemToEdit.price });
+      this.setState({ name: itemToEdit.name, price: itemToEdit.price.toString() });
     }
   }
 

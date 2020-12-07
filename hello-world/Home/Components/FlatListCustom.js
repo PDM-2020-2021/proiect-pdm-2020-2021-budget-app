@@ -22,7 +22,7 @@ this.props.onDelete(categoryId);
       <Text style={styles.textCategory}> {item.name} </Text>
       <View>
         <TouchableHighlight
-          onPress={() => this.props.setItemToEdit(item.id)}
+          onPress={() => this.props.setItemToEdit(item.internId)}
           underlayColor={"#f1f1f1"}
         >
           <NumberFormat
@@ -33,13 +33,14 @@ this.props.onDelete(categoryId);
               <Text style={styles.price}>{value} lei</Text>
             )}
           />
-        </TouchableHighlight>
-        <Button 
-         onPress={() =>this.handleDelete(item.id)}
-         color="#ebeef2"
-        title="Delete"/>
-          
+          </TouchableHighlight>
       </View>
+      <View style={styles.deleteButton}>
+        <Button 
+         onPress={() =>this.handleDelete(item.internId)}
+         title="Delete"
+         color="#41cac6"/>
+         </View>
     </View>
   );
 
@@ -47,7 +48,7 @@ this.props.onDelete(categoryId);
     return (
       <FlatList
         data={this.props.data}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.internId}
         renderItem={this.renderItem}
         ListHeaderComponent={() => (
           <Text style={styles.text}>Category                           Price</Text>
@@ -141,5 +142,16 @@ const styles = StyleSheet.create({
   },
   touchablePrice: {
     width: "50%",
+  },
+  deleteButton: {
+    borderWidth: 0,
+    alignItems: "center",
+    justifyContent: "center",
+    alignSelf: "flex-end",
+    width: 70,
+    height: 43,
+    marginBottom: 20,
+    marginRight: 10,
+    marginLeft:35,
   },
 });

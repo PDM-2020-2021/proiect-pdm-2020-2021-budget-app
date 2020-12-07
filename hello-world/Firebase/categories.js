@@ -8,11 +8,16 @@ var colors = require('nice-color-palettes');
 
 export async function addCategory(payload) {
   var id = uuid().replace(/\D/g,'').substr(0,5).replace(0,1);
+  // var id = parseInt(generatedID);
+  var internId = parseInt(id);
+  var name=payload.name;
+  var price= parseInt(payload.price);
   return categoriesCollection
     .doc(id)
     .set({
-      id,
-      ...payload,
+      internId,
+      name,
+      price,
       color: colors[Math.floor(Math.random() * 100 ) + 1][0],
       legendFontColor: "#7F7F7F",
       legendFontSize: 15,
@@ -37,27 +42,11 @@ export async function updateCategory(id, payload) {
 }
 
 export async function deleteCategory(id){
-
-  // var query = db.ref("Categories").orderByKey();
-  //   query.once(categoryName)
-  //     .then(function(snapshot) {
-  //     snapshot.forEach(function(childSnapshot) {
-  //       var pkey = childSnapshot.key; 
-  //       var chval = childSnapshot.val();
-
-  //       //check if remove this child
-  //       if(chval.name == item.name && chval.address == item.address){
-  //         db.child("categories/"+pkey).remove();
-  //         console.log("Document successfully deleted!");
-  //         return true;
-  //       }
-
-  //     });
-  //   });
   var idString = id.toString();
   categoriesCollection.doc(idString).delete().then(function() {
     console.log("Document successfully deleted!");
 }).catch(function(error) {
     console.error("Error removing document: ", error);
+    return true;
 });
 }
