@@ -62,7 +62,7 @@ export default class Home extends Component {
     if (isNew) {
       await addCategory(payload);
     } else {
-      await updateCategory(itemToEdit.id, payload);
+      await updateCategory(itemToEdit.internId, payload);
     }
 
     getCategories(this.onCategoryReceived);

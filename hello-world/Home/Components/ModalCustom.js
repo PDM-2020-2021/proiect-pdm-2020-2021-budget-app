@@ -144,11 +144,11 @@ flexDirection: "row",
   },
   touchableHighlight: {
     ...Colors.whiteBackground,
-    marginVertical: 10,
+    marginVertical: 20,
     alignSelf: "stretch",
     alignItems: "center",
-    width: '30%',
-    height: '15%'
+    width: '20%',
+    height: '10%'
   },
   flatList: {
     flexDirection: "row",

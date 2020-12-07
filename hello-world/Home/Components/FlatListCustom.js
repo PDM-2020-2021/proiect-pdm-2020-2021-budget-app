@@ -152,6 +152,6 @@ const styles = StyleSheet.create({
     height: 43,
     marginBottom: 20,
     marginRight: 10,
-    marginLeft:35,
+    marginLeft:25,
   },
 });
