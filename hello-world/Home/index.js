@@ -46,7 +46,7 @@ export default class Home extends Component {
     this.setModalVisible(true);
     this.setIsNew(false);
     this.setState({
-      itemToEdit: this.state.data.find((item) => item.id === id),
+      itemToEdit: this.state.data.find((item) => item.internId === id),
     });
   };
 
@@ -62,7 +62,7 @@ export default class Home extends Component {
     if (isNew) {
       await addCategory(payload);
     } else {
-      await updateCategory(itemToEdit.internId, payload);
+      await updateCategory(itemToEdit.internId.toString(), payload);
     }
 
     getCategories(this.onCategoryReceived);
