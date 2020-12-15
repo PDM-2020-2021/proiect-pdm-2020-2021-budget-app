@@ -8,34 +8,70 @@ export class CustomAgenda extends Component {
     super(props);
 
     this.state = {
-      items: {}
+      items: {},
+      BillsArray:this.props.bills
+
     };
   }
+
+   componentDidMount() {
+    this.loadBills();
+   }
+
+  
+    generateBillDates=(day)=>{
+      if(day<10)
+      {
+        day="0"+day.toString();
+      }
+      else
+      day=day.toString();
+
+      var generatedDatesArray=[];
+      var d = new Date();
+      var year=d.getFullYear();
+      var month=d.getMonth();
+      for (var i = 0, size = 12; i < size; i++){
+      if(month>12)
+      {
+      month=1;
+      year+=1;
+      }
+      var auxMonth=month.toString();
+      if(month<10)
+      {
+        auxMonth="0"+auxMonth;
+      }
+      generatedDatesArray.push(year.toString() + '-' + auxMonth + '-' + day.toString() )  
+      month+=1;    
+      }
+      return(generatedDatesArray)
+  }
+  
 
   render() {
     return (
       <Agenda
         items={this.state.items}
         loadItemsForMonth={this.loadMonths.bind(this)}
-        selected={'2020-12-04'}
+        selected={'2020-11-04'}
         renderItem={this.renderItem.bind(this)}
-        //renderEmptyDate={this.renderEmptyDate.bind(this)}
+        //loadedBills={this.loadBills.bind(this)}
         rowHasChanged={this.rowHasChanged.bind(this)}
       />
     );
   }
 
-  createBill=()=>{
-    this.state.items['2021-05-25'].push({
-        name: 'Factura la Netflix ' + '2020-12-04',
-      });
-    console.log(this.state.items['2021-05-25'])
+  createBill=(date,billName)=>{
+    this.state.items[date.toString()].push({
+      name: billName,
+    });
   };
 
-  loadMonths=()=>{
+  loadBills=()=>{ 
 
     var day={"timestamp": 1607099654};
-        for (let i = -365; i < 365; i++) {
+        for (let i = -730; i < 730; i++) {
           var time = day.timestamp + i * 24 * 60 * 60 ;
           var strTime = this.timeToString(time);
           
@@ -44,9 +80,26 @@ export class CustomAgenda extends Component {
           }
         }
 
-        this.state.items['2021-05-25'].push({
-          name: 'Factura la Netflix ' + '2020-12-04',
-        });
+       // console.log("<----------------------------------------------------------------") 
+       // console.log(BillsArray) 
+    for(let bill of this.state.BillsArray)
+    {
+      var billDay=bill.day;
+      var generatedDates=this.generateBillDates(billDay);
+      var billName=bill.billName;
+      
+      for(var i=0;i<generatedDates.length;i++)
+      {
+        this.createBill(generatedDates[i],billName);
+      } 
+    }
+  }
+
+  loadMonths=()=>{
+
+        // this.state.items['2021-05-25'].push({
+        //   name: 'Factura la Netflix ',
+        // });
       const newItems = {};
       Object.keys(this.state.items).forEach(key => {
         newItems[key] = this.state.items[key];

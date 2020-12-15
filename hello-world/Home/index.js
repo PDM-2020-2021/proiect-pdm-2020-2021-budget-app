@@ -111,7 +111,6 @@ export default class Home extends Component {
             isNew={isNew}
             onSave={this.handleSave}
             onCancel={this.handleCancel.bind(this)}
-           
           />
         )}
       </View>

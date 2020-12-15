@@ -28,6 +28,6 @@ export async function getPayments(onPaymentsReceived) {
   snapshot.forEach((doc) => {
     paymentsList.push(doc.data());
   });
-  console.log(paymentsList);
+  //console.log(paymentsList);
   onPaymentsReceived(paymentsList);
 }

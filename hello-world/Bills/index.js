@@ -11,16 +11,30 @@ export default class Bills extends Component {
 
   constructor(props) {
     super(props);
-    this.state={isModalVisible: false}
+    this.state={
+    isModalVisible: false,
+    BillsArray: [],
+    data:[]
+  }
   };
 
   componentDidMount() {
-    getPayments(this.onPaymentReceived);
+    getPayments(this.reciveDataForSetState);
   }
 
-  onPaymentReceived = (data) => {
-    this.setState({ data });
-  };
+  reciveDataForSetState=(recivedData)=>{
+    this.setState({data:recivedData})
+    // console.log("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+    // console.log(this.state.data);
+  }
+
+  // onPaymentReceived = async (data) => {
+  //   console.log("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
+  //   console.log(data)
+  //   await this.setState({BillsArray : data});
+  //   console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+  //   console.log(this.state.BillsArray);
+  // };
 
   setModalVisible = (bool) => {
     this.setState({ isModalVisible: bool });
@@ -33,12 +47,16 @@ export default class Bills extends Component {
 
   handleCancel =  () =>{
     this.setModalVisible(false);
-    console.log(billName)
-    console.log( amount)
-    console.log(day)
   }
 
+  onDataChange = async (payload) => {
+
+          await this.setState({selectedData: result})
+         
+    }
+
   render() {
+    const { isModalVisible, BillsArray } = this.state;
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.header}>
@@ -54,7 +72,7 @@ export default class Bills extends Component {
           </TouchableHighlight>
         </View>
         <View style={{ flex: 1 }}>
-          <CustomAgenda />
+          <CustomAgenda bills={this.state.data} />
         </View>
         {this.state.isModalVisible && (
           <AgendaModal
