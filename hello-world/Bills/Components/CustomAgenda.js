@@ -9,15 +9,18 @@ export class CustomAgenda extends Component {
 
     this.state = {
       items: {},
-      BillsArray:this.props.bills
-
+      BillsArray:this.props.bills,
+      BillsLoaded:false
     };
   }
 
-   componentDidMount() {
-    this.loadBills();
+ 
+   componentDidMount=  ()=>{
+    // this.loadBills();
+    console.log("componentDinMount");
+    this.loadBills(); 
+    this.setState({BillsLoaded:true});
    }
-
   
     generateBillDates=(day)=>{
       if(day<10)
@@ -45,30 +48,38 @@ export class CustomAgenda extends Component {
       generatedDatesArray.push(year.toString() + '-' + auxMonth + '-' + day.toString() )  
       month+=1;    
       }
-      return(generatedDatesArray)
+      return(generatedDatesArray) 
   }
   
 
   render() {
-    return (
-      <Agenda
+    console.log(this.state.BillsLoaded);
+
+    if(this.state.BillsLoaded)
+    {
+    return ( 
+      <Agenda key={this.state.BillsLoaded}
         items={this.state.items}
         loadItemsForMonth={this.loadMonths.bind(this)}
         selected={'2020-11-04'}
         renderItem={this.renderItem.bind(this)}
-        //loadedBills={this.loadBills.bind(this)}
         rowHasChanged={this.rowHasChanged.bind(this)}
       />
     );
+    }
+    else
+    {
+      return <View><Text>Loading..</Text></View>
+    }
   }
-
+ 
   createBill=(date,billName)=>{
-    this.state.items[date.toString()].push({
+     this.state.items[date.toString()].push({
       name: billName,
     });
   };
-
-  loadBills=()=>{ 
+ 
+   loadBills=()=>{ 
 
     var day={"timestamp": 1607099654};
         for (let i = -730; i < 730; i++) {
@@ -79,9 +90,6 @@ export class CustomAgenda extends Component {
             this.state.items[strTime] = [];
           }
         }
-
-       // console.log("<----------------------------------------------------------------") 
-       // console.log(BillsArray) 
     for(let bill of this.state.BillsArray)
     {
       var billDay=bill.day;
@@ -89,17 +97,14 @@ export class CustomAgenda extends Component {
       var billName=bill.billName;
       
       for(var i=0;i<generatedDates.length;i++)
-      {
-        this.createBill(generatedDates[i],billName);
+      { 
+       this.createBill(generatedDates[i],billName);
       } 
     }
+    
   }
 
-  loadMonths=()=>{
-
-        // this.state.items['2021-05-25'].push({
-        //   name: 'Factura la Netflix ',
-        // });
+  loadMonths=()=>{ 
       const newItems = {};
       Object.keys(this.state.items).forEach(key => {
         newItems[key] = this.state.items[key];
@@ -108,32 +113,6 @@ export class CustomAgenda extends Component {
         items: newItems
       });
   };
-
-//   loadItems(day) {
-//     setTimeout(() => {
-//       for (let i = -15; i < 85; i++) {
-//         const time = day.timestamp + i * 24 * 60 * 60 ;
-//         const strTime = this.timeToString(time);
-//         if (!this.state.items[strTime]) {
-//           this.state.items[strTime] = [];
-//           const numItems = Math.floor(Math.random() * 3 + 1);
-//           for (let j = 0; j < numItems; j++) {
-//             this.state.items[strTime].push({
-//               name: 'Item for ' + strTime + ' #' + j,
-//               //height: Math.max(50, Math.floor(Math.random() * 150))
-//             });
-//           }
-//         }
-//       }
-//       const newItems = {};
-//       Object.keys(this.state.items).forEach(key => {
-//         newItems[key] = this.state.items[key];
-//       });
-//       this.setState({
-//         items: newItems
-//       });
-//     }, 1000);
-//   }
 
   renderItem(item) {
     return (

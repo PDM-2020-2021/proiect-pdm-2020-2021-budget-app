@@ -20,9 +20,7 @@ componentDidMount() {
   getCategories(this.onCategoryReceived);
 }
 
-
   onCategoryReceived = (data) => {
-
     this.setState({ data });
   };
 

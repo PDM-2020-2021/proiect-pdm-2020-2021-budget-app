@@ -29,9 +29,6 @@ export default class AgendaModal extends Component {
   handleSave = () => {
     const { day,billName, amount } = this.state;
     this.props.onSave({ day,billName, amount });
-    console.log(billName)
-    console.log( amount)
-    console.log(day)
   };
   handleCancel= () =>{
     this.props.onCancel();

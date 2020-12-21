@@ -41,6 +41,7 @@ export default class Bills extends Component {
   };
 
   handleSave = async (payload) => {
+    //functie pentru trimis bill nou din buton spre customAgenda
     await addPayment(payload);
     this.setModalVisible(false);
   };
