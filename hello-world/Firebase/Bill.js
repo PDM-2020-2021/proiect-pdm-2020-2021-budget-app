@@ -30,4 +30,4 @@ export async function getPayments(onPaymentsReceived) {
   });
   //console.log(paymentsList);
   onPaymentsReceived(paymentsList);
-}
+} 

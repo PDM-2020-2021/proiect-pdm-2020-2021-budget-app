@@ -83,7 +83,7 @@ export default class Home extends Component {
   render() {
     // ES6 destructuring
     const { data, isNew, itemToEdit, isModalVisible } = this.state;
-
+ 
     return (
       <View style={styles.contentContainer}>
         <View style={styles.header}>

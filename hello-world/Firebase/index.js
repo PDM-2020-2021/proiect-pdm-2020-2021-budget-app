@@ -3,8 +3,8 @@ import "firebase/firestore";
 
 firebase.initializeApp({
   apiKey: "AIzaSyBzRqCJwEZpcaJnOo75EHiFgVeIixPsqmM",
-  authDomain: "pdm---reactnative.firebaseapp.com",
-  projectId: "pdm---reactnative",
+  authDomain: "pdm-v2.firebaseapp.com",
+  projectId: "pdm-v2",
 });
 
 // Initialize Cloud Firestore through Firebase

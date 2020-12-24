@@ -73,7 +73,7 @@ export default class Bills extends Component {
           </TouchableHighlight>
         </View>
         <View style={{ flex: 1 }}>
-          <CustomAgenda bills={this.state.data} />
+          <CustomAgenda /*bills={this.state.data}*/ />
         </View>
         {this.state.isModalVisible && (
           <AgendaModal
