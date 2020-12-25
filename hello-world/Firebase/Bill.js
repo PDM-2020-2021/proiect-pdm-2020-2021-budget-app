@@ -23,11 +23,9 @@ export async function addPayment(payload) {
 export async function getPayments(onPaymentsReceived) {
   const paymentsList = [];
   const snapshot = await recurentPaymentsCollection
-    //.orderBy("createdAt", "desc")
     .get();
   snapshot.forEach((doc) => {
     paymentsList.push(doc.data());
   });
-  //console.log(paymentsList);
   onPaymentsReceived(paymentsList);
 } 

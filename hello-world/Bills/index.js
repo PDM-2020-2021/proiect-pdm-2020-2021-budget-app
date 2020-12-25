@@ -14,36 +14,38 @@ export default class Bills extends Component {
     this.state={
     isModalVisible: false,
     BillsArray: [],
-    data:[]
+    data:[],
+    gotNewBill:false
   }
   };
 
+setGotNewBill =()=>{
+  this.setState({gotNewBill:false});
+}
+
+getGotNewBill=()=>{
+  return this.state.gotNewBill;
+}
   componentDidMount() {
-    getPayments(this.reciveDataForSetState);
   }
 
   reciveDataForSetState=(recivedData)=>{
     this.setState({data:recivedData})
-    // console.log("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-    // console.log(this.state.data);
   }
 
-  // onPaymentReceived = async (data) => {
-  //   console.log("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-  //   console.log(data)
-  //   await this.setState({BillsArray : data});
-  //   console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-  //   console.log(this.state.BillsArray);
-  // };
+  makeRetriveDataCall= async(customAgendaRetriveData)=>{
+  await getPayments(customAgendaRetriveData);
+  }
 
   setModalVisible = (bool) => {
     this.setState({ isModalVisible: bool });
   };
 
   handleSave = async (payload) => {
-    //functie pentru trimis bill nou din buton spre customAgenda
     await addPayment(payload);
     this.setModalVisible(false);
+    this.setState({gotNewBill:true});
+    
   };
 
   handleCancel =  () =>{
@@ -51,9 +53,7 @@ export default class Bills extends Component {
   }
 
   onDataChange = async (payload) => {
-
           await this.setState({selectedData: result})
-         
     }
 
   render() {
@@ -73,7 +73,7 @@ export default class Bills extends Component {
           </TouchableHighlight>
         </View>
         <View style={{ flex: 1 }}>
-          <CustomAgenda /*bills={this.state.data}*/ />
+          <CustomAgenda retriveData={this.makeRetriveDataCall} setGotNewBill={this.setGotNewBill} getGotNewBill={this.getGotNewBill}/*bills={this.state.data}*/ />
         </View>
         {this.state.isModalVisible && (
           <AgendaModal
