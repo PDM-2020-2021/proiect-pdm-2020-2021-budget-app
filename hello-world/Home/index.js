@@ -76,7 +76,6 @@ export default class Home extends Component {
   }
   handleDelete= async(itemId) =>{
     await deleteCategory(itemId);
-    console.log("am sters");
     getCategories(this.onCategoryReceived);
   }
 

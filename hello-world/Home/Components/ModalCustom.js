@@ -13,7 +13,6 @@ import { Typography, Colors, Spacing, Header, Buttons } from "../../Styles";
 export default class ModalCustom extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       name: "",
       price:"",
@@ -43,7 +42,6 @@ export default class ModalCustom extends Component {
       <Modal
         animationType="fade"
         visible={true}
-       // onRequestClose={() => this.props.setModalVisible(false)}
       >
         <View style={styles.modalView}>
           <Text style={styles.text}>Add a new category:</Text>

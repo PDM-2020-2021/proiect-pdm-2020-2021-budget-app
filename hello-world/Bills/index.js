@@ -8,58 +8,60 @@ import {
 } from "../Firebase/Bill";
 
 export default class Bills extends Component {
-
   constructor(props) {
     super(props);
     this.state={
     isModalVisible: false,
-    BillsArray: [],
     data:[],
     gotNewBill:false
   }
   };
-
+//Seteaza valoarea variabilei de stare gotNewBill pe false, v-a fi trimisa ca si props catre CustomAgenda
 setGotNewBill =()=>{
   this.setState({gotNewBill:false});
 }
-
+//Returneaza valoarea variabilei de stare gotNewBill,  v-a fi trimisa ca si props catre CustomAgenda
 getGotNewBill=()=>{
   return this.state.gotNewBill;
 }
   componentDidMount() {
   }
-
+//Nu cred ca mai e nevoie de ea
   reciveDataForSetState=(recivedData)=>{
     this.setState({data:recivedData})
   }
-
+//Functie intermediara intre componenta Bills din Firebase si componenta copil CustomAgenda
+//v-a fi trimisa ca si props catre CustomAgenda, unde va fi apleata cu argument ce reprezinta o functie
+//de setare a datelor de stare
   makeRetriveDataCall= async(customAgendaRetriveData)=>{
   await getPayments(customAgendaRetriveData);
   }
-
+//Functie cu ajutorul careia componenta AgendaModal este facuta vizibila sau nu
   setModalVisible = (bool) => {
     this.setState({ isModalVisible: bool });
   };
-
+//Functie apelata la apasarea butonului de save din componenta AgendaModal, adauga un nou element in colectie 
+//ascunde componenta AgendaModal, instiinteaza componenta CustomAgenda ca a fost introdusa o noua factura
   handleSave = async (payload) => {
     await addPayment(payload);
     this.setModalVisible(false);
     this.setState({gotNewBill:true});
-    
   };
-
+//Functie apelata la apasarea butonului de cancel din componenta AgendaModal, ascunde componenta AgendaModal
+//fara a salva modificarile 
   handleCancel =  () =>{
     this.setModalVisible(false);
   }
-
+//Vas iz Dis?
   onDataChange = async (payload) => {
           await this.setState({selectedData: result})
     }
 
   render() {
-    const { isModalVisible, BillsArray } = this.state;
+    const { isModalVisible } = this.state;
     return (
       <View style={{ flex: 1 }}>
+
         <View style={styles.header}>
           <Text style={styles.headerText}>Bills</Text>
           <TouchableHighlight
@@ -72,9 +74,11 @@ getGotNewBill=()=>{
             </View>
           </TouchableHighlight>
         </View>
+
         <View style={{ flex: 1 }}>
           <CustomAgenda retriveData={this.makeRetriveDataCall} setGotNewBill={this.setGotNewBill} getGotNewBill={this.getGotNewBill}/*bills={this.state.data}*/ />
         </View>
+        
         {this.state.isModalVisible && (
           <AgendaModal
             visibleModal={this.setModalVisible}

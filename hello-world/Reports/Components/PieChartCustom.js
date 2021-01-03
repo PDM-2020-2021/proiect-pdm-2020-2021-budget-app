@@ -19,9 +19,6 @@ export default class PieChartCustom extends Component {
       }
       
     render() {
-      //   const newData = [ {id:15278, name:'flori', price:100, color: '#157f8a',legendFontColor: "#7F7F7F",legendFontSize: 15},
-      //  {id:16734, name:'masini', price:150, color: '#71a51b',legendFontColor: "#7F7F7F",legendFontSize: 15},
-      //   {id:22384, name:'mancare', price:175,  color: '#199f10',legendFontColor: "#7F7F7F",legendFontSize: 15}]
         return (
             <PieChart
                 data={this.props.onDataChange}
@@ -31,7 +28,6 @@ export default class PieChartCustom extends Component {
                     backgroundColor: "#e26a00",
                     backgroundGradientFrom: "#fb8c00",
                     backgroundGradientTo: "#ffa726",
-
                     color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                     labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
                     style: {

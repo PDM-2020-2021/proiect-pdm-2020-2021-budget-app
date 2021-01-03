@@ -5,25 +5,47 @@ import {Agenda} from 'react-native-calendars';
 export class CustomAgenda extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       items: {},
       BillsArray:[],
       BillsLoaded:false
     };
   } 
-
+//Functie ce v-a fi apelata la incarcarea componentei (!=randarea), se face apelul funtiei primite de la parinte,
+//se extrag datele din Firestore, se populeaza vectorul de items, variabila de stare BillsLoaded se seteaza pe true
+//semnal pentru randarea componentei
+  componentDidMount= async ()=>{
+    await this.props.retriveData(this.reciveDataForSetState);
+    await this.loadBills();  
+    setTimeout(()=>{this.setState({BillsLoaded:true});},500);    
+   }
+//Datele extrase din Firestore sunt salvate in variabila items
   reciveDataForSetState=(recivedData)=>{
     this.setState({BillsArray:recivedData})
   }
-   componentDidMount= async ()=>{
-    await this.props.retriveData(this.reciveDataForSetState);
-    console.log("componentDinMount");
-    await this.loadBills(); 
-    
-    setTimeout(()=>{this.setState({BillsLoaded:true});},1000);    
-   }
-  
+//Variabila items este transformata in o matrice, cu index de forma 'DD-MM-YYYY',
+//in funtie de ziua in care este repartizata factura se genereaza indexi pentru urmatoarele 12 luni
+//facturile sunt adaugate la lista de facturi pentru ziua aleasa
+  loadBills=()=>{ 
+    var day={"timestamp": 1607099654};
+        for (let i = -730; i < 730; i++) {
+          var time = day.timestamp + i * 24 * 60 * 60 ;
+          var strTime = this.timeToString(time);
+            this.state.items[strTime] = [];
+        }
+    for(let bill of this.state.BillsArray)
+    {
+      var billDay=bill.day;
+      var generatedDates=this.generateBillDates(billDay);
+      var billName=bill.billName;
+       
+      for(var i=0;i<generatedDates.length;i++)
+      {  
+       this.createBill(generatedDates[i],billName);
+      } 
+    }
+  } 
+//In functie de ziua aleasa se genereaza o data in formatul DD-MM-YYYY pentru urmatoarele 12 luni
     generateBillDates=(day)=>{
       if(day<10)
       {
@@ -52,11 +74,53 @@ export class CustomAgenda extends Component {
       }
       return(generatedDatesArray) 
   }
+//functie pentru introducerea unei noi facturi in vectorul de facturi al unei zile
+  createBill=(date,billName)=>{
+    this.state.items[date.toString()].push({
+     name: billName,
+   });
+ };
   
+ loadMonths=()=>{ 
+  const newItems = {};
+  Object.keys(this.state.items).forEach(key => {
+    newItems[key] = this.state.items[key];
+  });
+  this.setState({
+    items: newItems
+  });
+};
+
+renderItem(item) {
+return (
+  <TouchableOpacity
+    
+    style={[styles.item]}
+    onPress={() => Alert.alert(item.name)}
+  >
+    <Text>{item.name}</Text>
+  </TouchableOpacity>
+);
+}
+
+renderEmptyDate() {
+return (
+  <View style={styles.emptyDate}>
+    <Text>This is empty date!</Text>
+  </View>
+);
+}
+
+rowHasChanged(r1, r2) {
+return r1.name !== r2.name;
+}
+
+timeToString(time) {
+var date = new Date(time*1000);
+return date.toISOString().split('T')[0];
+}
  
   render() {
-    console.log(this.state.BillsLoaded);
-
     if(this.state.BillsLoaded)
     {
       if(this.props.getGotNewBill()==true)
@@ -83,76 +147,7 @@ export class CustomAgenda extends Component {
       return <View><Text>Loading..</Text></View>
     }
   }
- 
-  createBill=(date,billName)=>{
-     this.state.items[date.toString()].push({
-      name: billName,
-    });
-  };
-  
-   loadBills=()=>{ 
-    
-    var day={"timestamp": 1607099654};
-        for (let i = -730; i < 730; i++) {
-          var time = day.timestamp + i * 24 * 60 * 60 ;
-          var strTime = this.timeToString(time);
-            this.state.items[strTime] = [];
-        }
-        console.log(this.state.BillsArray);
-    for(let bill of this.state.BillsArray)
-    {
-      var billDay=bill.day;
-      var generatedDates=this.generateBillDates(billDay);
-      var billName=bill.billName;
-       
-      for(var i=0;i<generatedDates.length;i++)
-      {  
-       this.createBill(generatedDates[i],billName);
-      } 
-    }
-  } 
- 
-  loadMonths=()=>{ 
-      const newItems = {};
-      Object.keys(this.state.items).forEach(key => {
-        newItems[key] = this.state.items[key];
-      });
-      this.setState({
-        items: newItems
-      });
-  };
-
-  renderItem(item) {
-    return (
-      <TouchableOpacity
-        
-        style={[styles.item]}
-        onPress={() => Alert.alert(item.name)}
-      >
-        <Text>{item.name}</Text>
-      </TouchableOpacity>
-    );
-  }
-
-  renderEmptyDate() {
-    return (
-      <View style={styles.emptyDate}>
-        <Text>This is empty date!</Text>
-      </View>
-    );
-  }
-
-  rowHasChanged(r1, r2) {
-    return r1.name !== r2.name;
-  }
-
-  timeToString(time) {
-    var date = new Date(time*1000);
-    return date.toISOString().split('T')[0];
-    
-  }
 }
-
 
 const styles = StyleSheet.create({
   item: {

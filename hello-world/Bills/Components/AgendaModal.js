@@ -13,7 +13,6 @@ import { Typography, Colors, Spacing, Header, Buttons } from "../../Styles";
 export default class AgendaModal extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       day:0,
       billName: "",
@@ -41,7 +40,6 @@ export default class AgendaModal extends Component {
       <Modal
         animationType="fade"
         visible={true}
-       // onRequestClose={() => this.props.setModalVisible(false)}
       >
         <View style={styles.modalView}>
           <Text style={styles.text}>Add a new recurent payment</Text>

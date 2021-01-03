@@ -35,7 +35,6 @@ export async function getCategories(onCategoriesReceived) {
   snapshot.forEach((doc) => {
     categoriesList.push(doc.data());
   });
-  //console.log(categoriesList);
   onCategoriesReceived(categoriesList);
 }
 export async function updateCategory(id, payload) {

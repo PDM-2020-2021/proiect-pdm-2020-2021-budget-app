@@ -13,8 +13,6 @@ import { Typography, Colors, Spacing, Header, Buttons } from "../../Styles";
 export default class FlatListCustom extends Component {
 
   handleDelete= (categoryId)=>{
-    console.log("in flat list sterg")
-    console.log(categoryId)
 this.props.onDelete(categoryId);
   }
   renderItem = ({ item }) => (
