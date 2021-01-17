@@ -58,6 +58,7 @@ export class CustomAgenda extends Component {
       var d = new Date();
       var year=d.getFullYear();
       var month=d.getMonth();
+      month+=1;
       for (var i = 0, size = 12; i < size; i++){
       if(month>12)
       {
@@ -72,10 +73,13 @@ export class CustomAgenda extends Component {
       generatedDatesArray.push(year.toString() + '-' + auxMonth + '-' + day.toString() )  
       month+=1;    
       }
+      console.log(generatedDatesArray);
       return(generatedDatesArray) 
   }
 //functie pentru introducerea unei noi facturi in vectorul de facturi al unei zile
   createBill=(date,billName)=>{
+    console.log(date.toString());
+    console.log(billName);
     this.state.items[date.toString()].push({
      name: billName,
    });

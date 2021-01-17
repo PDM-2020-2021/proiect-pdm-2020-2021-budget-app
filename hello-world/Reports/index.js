@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, View, Button, Dimensions } from "react-native";
+import { StyleSheet, Text, View, Button, Dimensions, TouchableHighlight, ScrollView,SafeAreaView } from "react-native";
 import PieChartCustom from './Components/PieChartCustom';
 import MultiPickerCustom from './Components/MultiPickerCustom';
 import {addCategory, getCategories, updateIsCheckedField} from '../../hello-world/Firebase/categories'
@@ -38,11 +38,14 @@ componentDidMount() {
         <View style={styles.header}>
           <Text style={styles.headerText}>Reports</Text>
         </View>
-        
+        <SafeAreaView>
+          <ScrollView>
         <PieChartCustom selectedData={selectedData} onDataChange={this.onDataChange.bind(this), selectedData}/>
+        </ScrollView>
+        </SafeAreaView>
         <Text>  Select the categories to be displayed in PieChart:</Text>
         <MultiPickerCustom data={data} onDataChange={this.onDataChange.bind(this)} />
-
+        
       </View>
     );
   }
